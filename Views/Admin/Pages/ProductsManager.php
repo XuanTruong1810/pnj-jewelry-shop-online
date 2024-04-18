@@ -6,7 +6,9 @@
     </div>
     <div style="margin-top: 30px; display: flex; justify-content: space-between;">
         <div>
-            <button type="button" class="btn btn-primary" data-mdb-ripple-init>Thêm sản phẩm</button>
+            <form action="../../AddProduct/index/">
+                <button type="submit" class="btn btn-primary" data-mdb-ripple-init>Thêm sản phẩm</button>
+            </form>
         </div>
     </div>
     <div>
