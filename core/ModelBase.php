@@ -5,7 +5,7 @@ class ModelBase
     private $username = "root";
     private $password = "";
     private $database = "pnj_shop";
-    private $conn;
+    public $conn;
     public function __construct()
     {
         try {

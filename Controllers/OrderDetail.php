@@ -5,10 +5,14 @@ class OrderDetail extends ControllerBase
     public function OrderDetailID($id)
     {
         $model = $this->Model("OrderModel");
-        $result = $model->DetailOrder_GetDetailProduct($id);
+        $Products = $model->DetailOrder_GetDetailProduct($id);
+        $Users = $model->DetailOrder_GetInfoUser($id);
+        $Payment = $model->DetailOrder_GetPaymentMethod($id);
         $this->View("index", "Admin", [
             "Page" => "OrderDetailManager",
-            "result" => $result,
+            "Products" => $Products,
+            "Users" => $Users,
+            "Payment" => $Payment,
         ]);
     }
 }

@@ -15,4 +15,9 @@ class Employee extends ControllerBase
             "EmployeeList" => $EmployeeList,
         ]);
     }
+    public function DeleteEmployee($id)
+    {
+        $this->employeeModel->RemoveEmployee($id);
+        $this->index();
+    }
 }

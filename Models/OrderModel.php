@@ -5,7 +5,7 @@ class OrderModel extends ModelBase
     // Dùng cho Admin
     public function GetAll()
     {
-        $query = "SELECT ORDERID,TOTAL,CREATEAT, C.CUSTOMERNAME STATUS FROM orders AS O
+        $query = "SELECT ORDERID,TOTAL,CREATEAT, C.CUSTOMERNAME as CUSTOMERNAME, STATUS FROM orders AS O
                     JOIN customer AS C ON C.CUSTOMERID = O.CUSTOMERID ORDER BY CREATEAT DESC";
         return $this->Query($query, null)->fetchAll();
     }
@@ -23,9 +23,9 @@ class OrderModel extends ModelBase
     {
         $query = "SELECT c.CUSTOMERNAME,c.PHONENUMBER,c.EMAIL,s.SHIPPINGMETHODNAME, o.ADDRESS FROM orders as o
                     JOIN customer as c on c.CUSTOMERID = o.CUSTOMERID
-                    JOIN shippingmethods as s on s.SHIPPINGMETHODID = o.SHIPPINGMETHODID,
-                    WHERE O.ORDERID = ?";
-        return $this->Query($query, [$id])->fetchAll(PDO::FETCH_ASSOC);
+                    JOIN shippingmethods as s on s.SHIPPINGMETHODID = o.SHIPPINGMETHODID
+                    WHERE o.ORDERID = ?";
+        return $this->Query($query, [$id])->fetchObject();
     }
     public function DetailOrder_GetPaymentMethod($id)
     {
@@ -33,7 +33,7 @@ class OrderModel extends ModelBase
                     JOIN orders as o on o.ORDERID = pyo.ORDERID
                     JOIN paymentmethods as py on py.PAYMENTMETHODID = pyo.PAYMENTMETHODID
                     WHERE o.ORDERID = ?";
-        return $this->Query($query, [$id])->fetchAll(PDO::FETCH_ASSOC);
+        return $this->Query($query, [$id])->fetchObject();
     }
     public function AcceptOrder($id)
     {
@@ -50,5 +50,18 @@ class OrderModel extends ModelBase
         $query = "UPDATE orders set STATUS = 3 WHERE ORDERID = ?";
         return $this->Query($query, [$id]);
     }
-    //Dùng cho người dùng
+    public function AddOrder($id)
+    {
+        $uuid = uniqid();
+        $queryOrder = "INSERT INTO `orders`(`ORDERID`, `CREATEAT`, `STATUS`, `ADDRESS`, `DISCOUNT`, `CUSTOMERID`, `SHIPPINGMETHODID`)
+                        VALUES (?,CURRENT_DATE(),?,?,?,?,?)";
+        $result = $this->Query($queryOrder, [$uuid, 1, null, null, $id, 1]);
+        if ($result !== false && $result->rowCount() > 0) {
+
+            return $uuid;
+        } else {
+            echo "Không thể tạo đơn hàng mới.";
+            return false;
+        }
+    }
 }
