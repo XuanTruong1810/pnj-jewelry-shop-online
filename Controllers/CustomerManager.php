@@ -1,7 +1,7 @@
 <?php
 
 
-class Customer extends ControllerBase
+class CustomerManager extends ControllerBase
 {
     private $CustomerModel;
     public function __construct()

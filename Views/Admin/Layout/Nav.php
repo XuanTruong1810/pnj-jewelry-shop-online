@@ -22,7 +22,7 @@
                 <a href="../../Admin/index/"><i class="fa-solid fa-cart-shopping"></i> Quản lý Sản Phẩm</a>
             </li>
             <li>
-                <a href="../../Customer/index/"><i class="fa-solid fa-cart-shopping"></i> Quản lý Khách Hàng</a>
+                <a href="../../CustomerManager/index/"><i class="fa-solid fa-cart-shopping"></i> Quản lý Khách Hàng</a>
             </li>
             <li>
                 <a href="?page=products"><i class="fa-solid fa-list"></i> Thống Kê</a>

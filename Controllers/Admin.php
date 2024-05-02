@@ -1,5 +1,4 @@
 <?php
-
 class Admin extends ControllerBase
 {
     public function index()
