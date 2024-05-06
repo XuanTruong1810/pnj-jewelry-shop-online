@@ -52,4 +52,10 @@ class Product extends ModelBase
         $result = $this->Query($query, [$id])->fetchAll();
         return $result;
     }
+    public function GetSize_API()
+    {
+        $query = "SELECT * FROM size";
+        $result = $this->Query($query, null)->fetchAll();
+        return $result;
+    }
 }

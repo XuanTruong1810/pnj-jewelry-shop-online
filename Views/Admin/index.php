@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="../../Public/css/Manager/importproduct.css">
     <link rel="stylesheet" href="../../Public/css/Admin/orderDetail.css">
     <link rel="stylesheet" href="../../Public/css/Admin/CreateOrder.css">
+    <link rel="stylesheet" href="../../Public/css/Admin/AddProduct.css">
+
 
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -32,6 +34,7 @@
         }
     </style>
 </head>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
 <body>
 
@@ -53,6 +56,7 @@
 </body>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
 <script src="../../Public/js/dataTables.js"></script>
 <script>
     new DataTable('#Data_product', {

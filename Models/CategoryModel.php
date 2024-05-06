@@ -9,4 +9,19 @@ class CategoryModel extends ModelBase
         cad JOIN category_attributes as ca on ca.CATEGORY_ATTRIBUTEID = cad.CATEGORY_ATTRIBUTEID;";
         return $this->Query($query, null)->fetchAll();
     }
+    public function LoadCategoryAPI()
+    {
+        $query = "SELECT * FROM category";
+        return $this->Query($query, null)->fetchAll();
+    }
+    public function LoadCategoryDetailAPI($id)
+    {
+        $query = "SELECT * FROM category_attributes where categoryID = ? ";
+        return $this->Query($query, [$id])->fetchAll();
+    }
+    public function LoadCategoryDetailProductAPI($id)
+    {
+        $query = "SELECT * FROM category_attributes_detail where CATEGORY_ATTRIBUTEID = ? ";
+        return $this->Query($query, [$id])->fetchAll();
+    }
 }
