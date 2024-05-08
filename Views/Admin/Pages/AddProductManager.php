@@ -23,12 +23,13 @@
             itemAddProduct.innerHTML = `
                 <div>
                     <div>
-                        <label for="imgUpload${i}">
+                        <label for="imgUpload-${i}">
                             <i class="fa-solid fa-plus"></i>
                         </label>
-                        <input type="file" name="imgUpload" id="imgUpload${i}" hidden multiple ">
+                        <i>Tối đa 5 ảnh</i>
+                        <input type="file" class="imgUpload" accept="image/*" name="imgUpload" id="imgUpload-${i}" hidden multiple ">
+                        <div class="image-preview"></div>
                     </div>
-                    <div class="image-preview" id="imagePreview${i}"></div>
                     <div>
                         <input type="text" class="ProductName" name="ProductName" placeholder="Tên sản phẩm">
                     </div>
@@ -161,7 +162,6 @@
             select.addEventListener("change", (e) => {
                 const parent = select.parentElement.parentElement;
                 const bodyTable = parent.querySelector("tbody");
-                console.log(bodyTable);
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
                         <td>Kích cỡ 
@@ -175,6 +175,32 @@
                 bodyTable.appendChild(tr);
             })
         });
+        const allInputFile = document.querySelectorAll("input[name=imgUpload]");
+        allInputFile.forEach((img, index) => {
+            img.addEventListener("change", (e) => {
+                const uploadContainer = img.parentElement.parentElement.parentElement;
+                const imagePreview = uploadContainer.querySelector(".image-preview");
+                const files = e.target.files;
+                if (files.length > 5) {
+                    alert("Tối đa 5 ảnh!")
+                    return;
+                }
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const reader = new FileReader();
+
+                    reader.onload = (event) => {
+                        const imageUrl = event.target.result;
+                        const previewImg = document.createElement("img");
+                        previewImg.src = imageUrl;
+                        previewImg.style.width = '100px';
+                        previewImg.style.height = '100px';
+                        imagePreview.appendChild(previewImg);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            })
+        })
     });
     const btn = document.querySelector("#btnAdd");
     btn.addEventListener("click", () => {
@@ -184,12 +210,17 @@
         const products = [];
         productName.forEach((name, index) => {
             const sizes = [];
+            const Images = [];
             const productNameValue = name.value.trim();
             const priceValue = price[index].value.trim();
             const detailCategory = detail[index].value;
-            console.log(detail);
             const sizeParent = name.parentElement.parentElement.parentElement;
+            console.log(sizeParent);
             const trs = sizeParent.querySelectorAll("tbody tr");
+            const imagePreviews = sizeParent.querySelectorAll(".image-preview img");
+            imagePreviews.forEach((img, index) => {
+                Images.push(img.src);
+            });
             trs.forEach(tr => {
                 const input = tr.querySelectorAll("input");
                 sizes.push({
@@ -202,10 +233,28 @@
                     ProductName: productNameValue,
                     ProductPrice: priceValue,
                     ProductCategoryDetail: detailCategory,
-                    Sizes: sizes
+                    Sizes: sizes,
+                    Images: Images,
                 });
             }
         });
         console.log(products);
+        $.ajax({
+            type: "POST",
+            url: "http://<?php echo $_SERVER['HTTP_HOST'] ?>/PNJSHOP/AddProduct/AddNewProduct/",
+            data: JSON.stringify({
+                products: products,
+            }),
+            dataType: "json",
+            contentType: "application/json",
+            success: function(response) {
+
+                console.log("return data:", response);
+            },
+            error: function(xhr, status, error) {
+
+                console.error("Request failed: " + error);
+            }
+        });
     });
 </script>

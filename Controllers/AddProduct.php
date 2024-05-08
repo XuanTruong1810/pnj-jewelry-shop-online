@@ -16,4 +16,14 @@ class AddProduct extends ControllerBase
         header('Content-type: application/json');
         echo json_encode(["data" => $result]);
     }
+
+    public function AddNewProduct()
+    {
+        $postData = file_get_contents("php://input");
+        $jsonData = json_decode($postData, true);
+        $modelProduct = $this->Model("ProductManagerModel");
+        $result =  $modelProduct->AddProduct($jsonData['products']);
+        header('Content-type: application/json');
+        echo json_encode(["data" => $result]);
+    }
 }
