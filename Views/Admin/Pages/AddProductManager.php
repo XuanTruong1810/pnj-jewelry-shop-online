@@ -1,5 +1,4 @@
 <h1>Thêm sản phẩm</h1>
-
 <div>
     <div style="display: flex; justify-content: space-between;">
         <div style="width: 200px;" class="form-outline" data-mdb-input-init>
@@ -27,7 +26,7 @@
                         <label for="imgUpload${i}">
                             <i class="fa-solid fa-plus"></i>
                         </label>
-                        <input type="file" name="imgUpload" id="imgUpload${i}" hidden multiple>
+                        <input type="file" name="imgUpload" id="imgUpload${i}" hidden multiple ">
                     </div>
                     <div class="image-preview" id="imagePreview${i}"></div>
                     <div>
@@ -70,6 +69,8 @@
             products.appendChild(itemAddProduct);
 
         }
+        // Hàm để xem trước ảnh
+
         $.ajax({
             type: "GET",
             url: "http://<?php echo $_SERVER['HTTP_HOST'] ?>/PNJSHOP/Category/GetCategory/",
@@ -108,6 +109,7 @@
 
             }
         });
+
         const Category = document.querySelectorAll("select[name='category']");
         Category.forEach(element => {
             element.addEventListener('change', (e) => {
