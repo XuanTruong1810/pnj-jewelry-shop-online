@@ -16,7 +16,7 @@
                 <a href="../../Orders/index/"><i class="fa-solid fa-cart-shopping"></i> Quản lý Đơn Hàng</a>
             </li>
             <li>
-                <a href="?page=importProduct"><i class="fa-solid fa-cart-shopping"></i> Quản lý Nhập Hàng</a>
+                <a href="../../PurchaseInvoice/index/"><i class="fa-solid fa-cart-shopping"></i> Quản lý Nhập Hàng</a>
             </li>
             <li>
                 <a href="../../Admin/index/"><i class="fa-solid fa-cart-shopping"></i> Quản lý Sản Phẩm</a>
