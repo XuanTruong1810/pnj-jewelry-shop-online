@@ -74,4 +74,19 @@ class ProductManagerModel extends ModelBase
             self::AddProductSize($product['Sizes'], $uuid);
         }
     }
+    public function GetAllProducts()
+    {
+        $query = "SELECT P.PRODUCTNAME,ps.QUANTITY,S.DESCRIPTION_SIZE FROM product_size as ps
+                JOIN products AS P ON P.PRODUCTID = ps.PRODUCTID
+                JOIN SIZE AS S ON S.SIZEID = ps.SIZEID";
+        return $this->Query($query, null)->fetchAll();
+    }
+    public function GetAllProductsUnder10()
+    {
+        $query = "SELECT P.PRODUCTNAME,ps.QUANTITY,S.DESCRIPTION_SIZE FROM product_size as ps
+                    JOIN products AS P ON P.PRODUCTID = ps.PRODUCTID
+                    JOIN SIZE AS S ON S.SIZEID = ps.SIZEID
+                    WHERE ps.QUANTITY < 10";
+        return $this->Query($query, null)->fetchAll();
+    }
 }
