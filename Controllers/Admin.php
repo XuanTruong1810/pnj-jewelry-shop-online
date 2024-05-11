@@ -1,14 +1,28 @@
 <?php
+require_once './Middlewares/Authentication.php';
 class Admin extends ControllerBase
 {
+    private $AuthModel;
+    private $Middleware;
+    public function __construct()
+    {
+        $this->AuthModel  = $this->Model("Authentication");
+        $this->Middleware = new Middleware();
+    }
     public function index()
     {
-        $model = $this->Model("ProductManagerModel");
-        $data = $model->GetAllProduct();
-        $this->View("index", "Admin", [
-            "Page" => "ProductsManager",
-            "Products" => $data,
-        ]);
+        $check = $this->Middleware->AuthenticationAdmin($this->AuthModel);
+        if ($check) {
+            $model = $this->Model("ProductManagerModel");
+            $data = $model->GetAllProduct();
+            $this->View("index", "Admin", [
+                "Page" => "ProductsManager",
+                "Products" => $data,
+            ]);
+        } else {
+            header("Location: /PNJSHOP/LoginManager/index/");
+            exit();
+        }
     }
     public function DeleteProduct()
     {

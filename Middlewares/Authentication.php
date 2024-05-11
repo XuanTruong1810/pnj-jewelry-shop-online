@@ -2,11 +2,9 @@
 
 class Middleware
 {
-    public static function Authentication()
+    public function AuthenticationAdmin($model)
     {
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: /login.php');
-            exit();
-        }
+        $check = $model->GenerateTokenAdmin($_COOKIE['AuthenticationAdmin'] ?? "");
+        return $check ? true : false;
     }
 }
