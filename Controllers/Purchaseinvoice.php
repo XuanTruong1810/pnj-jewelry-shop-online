@@ -20,4 +20,9 @@ class PurchaseInvoice extends ControllerBase
         header('Content-type: application/json');
         echo json_encode(["data" => $result]);
     }
+    public function Confirm_delivery($id)
+    {
+        $this->PurchaseInvoiceModel->Confirm_delivery($id);
+        $this->index();
+    }
 }

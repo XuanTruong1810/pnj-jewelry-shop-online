@@ -16,6 +16,7 @@
                     <th>Ngày tạo</th>
                     <th>Tổng tiền</th>
                     <th>Nhà cung cấp</th>
+                    <th>Trạng thái giao hàng</th>
                     <th>Chức năng</th>
                 </tr>
             </thead>
@@ -26,9 +27,10 @@
                         <td><?php echo $result['CREATEAT'] ?></td>
                         <td><?php echo $result['TOTAL'] ?></td>
                         <td><?php echo $result['SUPPLIERNAME'] ?></td>
+                        <td><?php echo $result['STATUS'] == 0 ? "Chưa giao hàng" : "Xác nhận giao hàng" ?></td>
                         <td>
-                            <a href="#"> <button type="button" class="btn btn-primary" data-mdb-ripple-init>Xem chi tiết</button></a>
-                            <a href="#"> <button type="button" class="btn btn-primary" data-mdb-ripple-init>Xác nhận giao hàng</button></a>
+                            <a href="../Detail/<?php echo $result['PURCHASEINVOICEID'] ?>"> <button type="button" class="btn btn-primary" data-mdb-ripple-init>Xem chi tiết</button></a>
+                            <a href="../Confirm_delivery/<?php echo $result['PURCHASEINVOICEID'] ?>"> <button type="button" class="btn btn-primary" data-mdb-ripple-init>Xác nhận giao hàng</button></a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

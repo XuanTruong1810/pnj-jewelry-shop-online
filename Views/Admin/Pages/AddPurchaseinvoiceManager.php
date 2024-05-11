@@ -33,45 +33,15 @@
                 </tbody>
             </table>
         </div>
-        <div style="width: calc(100% - 630px);">
-            <h5>Gợi ý nhập hàng</h5>
-            <button type="button" id="generateInvoiceRecommendBtn" class="btn btn-primary" data-mdb-ripple-init>Thêm vào hóa đơn</button>
-
+        <div style="width: calc(100% - 680px);">
+            <h3>Hóa đơn nhập hàng</h3>
+            <div id="order"></div>
             <div>
-                <table id="PurchaseInvoiceB">
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" name="" id="CheckAllRecommend"></th>
-                            <th>Tên sản phẩm</th>
-                            <th>Kích cỡ</th>
-                            <th>Số lượng trong kho</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($data['ProductsUnder10'] as $product) : ?>
-                            <tr>
-                                <td><input type="checkbox" name="" class="ProductRecommendCheckBox"></td>
-                                <td data-id="<?php echo $product['PRODUCT_SIZEID'] ?>">
-                                    <?php echo ($product['PRODUCTNAME']) ?>
-                                </td>
-                                <td><?php echo ($product['DESCRIPTION_SIZE']) ?></td>
-                                <td><?php echo ($product['QUANTITY']) ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                <button type="button" id="createOrder" class="btn btn-primary" data-mdb-ripple-init>Tạo hóa đơn</button>
             </div>
         </div>
     </div>
-    <div>
-        <h3>Hóa đơn nhập hàng</h3>
-        <div id="order">
 
-        </div>
-        <div>
-            <button type="button" id="createOrder" class="btn btn-primary" data-mdb-ripple-init>Tạo hóa đơn</button>
-        </div>
-    </div>
 </div>
 <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
 <script>
@@ -126,7 +96,10 @@
                 <li data-id="${select.productId}">${select.productName}</li>
                 <li>${select.productSize}</li>
                 <li>
-                    <input type="number" name="" id="">
+                    <input class="quantity" type="number" name="" id="">
+                </li>
+                <li>
+                    <input class="price" type="number" name="" id="">
                 </li>
                 <li>Xóa</li>
     `;
@@ -162,26 +135,47 @@
 
     const checkAllCheckboxProduct = document.getElementById('checkAllProducts');
     const productCheckboxes = document.querySelectorAll('.productCheckbox');
-    const checkAllRecommendCheckbox = document.getElementById('CheckAllRecommend');
-    const productRecommendCheckboxes = document.querySelectorAll('.ProductRecommendCheckBox');
     checkAll(checkAllCheckboxProduct, productCheckboxes);
     checkProduct(checkAllCheckboxProduct, productCheckboxes);
-    checkAll(checkAllRecommendCheckbox, productRecommendCheckboxes);
-    checkProduct(checkAllRecommendCheckbox, productRecommendCheckboxes);
     isCheckBox("generateInvoiceBtn", productCheckboxes);
-    isCheckBox("generateInvoiceRecommendBtn", productRecommendCheckboxes);
     document.getElementById("createOrder").addEventListener('click', () => {
         const CreateOrder = {};
         const supplier = document.getElementById('supplier').value;
         const arrProduct = [];
-        selectedProducts.forEach(select => {
+        selectedProducts.forEach((select, index) => {
+            const quality = document.querySelectorAll('.quantity');
+            const price = document.querySelectorAll('.price');
+
             arrProduct.push({
                 productId: select.productId,
+                quality: quality[index].value,
+                price: price[index].value
             });
         })
         CreateOrder.supplier = supplier;
         CreateOrder.products = arrProduct;
         // call api
-        console.log(CreateOrder);
+        console.log(JSON.stringify({
+            orders: CreateOrder
+        }));
+        $.ajax({
+            type: "POST",
+            url: "http://<?php echo $_SERVER['HTTP_HOST'] ?>/PNJSHOP/AddPurchaseInvoice/CreatePurchaseInvoice/",
+            data: JSON.stringify({
+                orders: CreateOrder,
+            }),
+            dataType: "json",
+            contentType: "application/json",
+            success: function(response) {
+                console.log("return data:", response);
+                if (response.status = "success") {
+                    window.location.href = "../../PurchaseInvoice/index/";
+                }
+            },
+            error: function(xhr, status, error) {
+
+                console.error("Request failed: " + error);
+            }
+        });
     })
 </script>
