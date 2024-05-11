@@ -11,21 +11,18 @@ class Admin extends ControllerBase
     }
     public function index()
     {
-        $check = $this->Middleware->AuthenticationAdmin($this->AuthModel);
-        if ($check) {
-            $model = $this->Model("ProductManagerModel");
-            $data = $model->GetAllProduct();
-            $this->View("index", "Admin", [
-                "Page" => "ProductsManager",
-                "Products" => $data,
-            ]);
-        } else {
-            header("Location: /PNJSHOP/LoginManager/index/");
-            exit();
-        }
+        $this->Middleware->AuthenticationAdmin($this->AuthModel);
+        $model = $this->Model("ProductManagerModel");
+        $data = $model->GetAllProduct();
+        $this->View("index", "Admin", [
+            "Page" => "ProductsManager",
+            "Products" => $data,
+        ]);
     }
     public function DeleteProduct()
     {
+        $this->Middleware->AuthenticationAdmin($this->AuthModel);
+
         $productID = $_POST['ProductID'];
         $model = $this->Model("ProductManagerModel");
         $data = $model->DeleteProduct($productID);
@@ -33,6 +30,8 @@ class Admin extends ControllerBase
     }
     public function DetailProduct($id)
     {
+        $this->Middleware->AuthenticationAdmin($this->AuthModel);
+
         $model = $this->Model("ProductManagerModel");
         $data = $model->DetailProduct($id);
         $this->View("index", "Admin", [
@@ -42,6 +41,7 @@ class Admin extends ControllerBase
     }
     public function SearchProduct()
     {
+        $this->Middleware->AuthenticationAdmin($this->AuthModel);
         $keySearch = $_POST['keySearch'];
         if (!empty($keySearch)) {
             $model = $this->Model("ProductManagerModel");

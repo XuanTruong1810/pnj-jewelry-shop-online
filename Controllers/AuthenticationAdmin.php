@@ -13,4 +13,10 @@ class AuthenticationAdmin extends ControllerBase
             echo json_encode(['data' => "thành công", 'status' => 200]);
         }
     }
+    public function AdminLogout()
+    {
+        setcookie('AuthenticationAdmin', '', time() - (86400 * 30), '/');
+        header('Content-Type: application/json; charset=utf8');
+        echo json_encode(['data' => "thành công", 'status' => 200]);
+    }
 }

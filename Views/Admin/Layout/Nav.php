@@ -28,8 +28,24 @@
                 <a href="?page=products"><i class="fa-solid fa-list"></i> Thống Kê</a>
             </li>
             <li>
-                <a href="#">Đăng xuất</a>
+                <button>
+                    Đăng Xuất
+                </button>
             </li>
         </ul>
     </div>
 </div>
+<script>
+    document.querySelector('button').addEventListener('click', () => {
+        $.ajax({
+            type: "post",
+            url: "http://localhost:8080/PNJSHOP/AuthenticationAdmin/AdminLogout/",
+            success: function(response) {
+                console.log(response);
+                if (response.status == 200) {
+                    window.location.href = '/PNJSHOP/LoginManager/index/';
+                }
+            }
+        });
+    });
+</script>

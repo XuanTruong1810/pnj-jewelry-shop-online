@@ -1,14 +1,20 @@
 <?php
+require_once './Middlewares/Authentication.php';
 
 class CreateOrder extends ControllerBase
 {
     private $OrderModel;
+    private $AuthModel;
+    private $Middleware;
     public function __construct()
     {
+        $this->AuthModel  = $this->Model("Authentication");
+        $this->Middleware = new Middleware();
         $this->OrderModel = $this->Model("OrderModel");
     }
     public function index()
     {
+        $this->Middleware->AuthenticationAdmin($this->AuthModel);
         $customerName = $_POST['customer_name'];
         $phoneNumber = $_POST['phone_number'];
         $email = $_POST['email'];
