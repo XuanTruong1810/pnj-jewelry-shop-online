@@ -54,7 +54,7 @@ try {
             <div class="header_top-right">
                 <div>
                     <span><i class="fa-regular fa-user"></i></span>
-                    <a href="../Customer/?page=login">
+                    <a href="../../Customer/Login/">
                         <span>Tài khoản của tôi</span>
                     </a>
                 </div>

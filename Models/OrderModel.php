@@ -50,14 +50,13 @@ class OrderModel extends ModelBase
         $query = "UPDATE orders set STATUS = 3 WHERE ORDERID = ?";
         return $this->Query($query, [$id]);
     }
-    public function AddOrder($id)
+    public function AddOrder($id, $shippingMethod, $address)
     {
         $uuid = uniqid();
-        $queryOrder = "INSERT INTO `orders`(`ORDERID`, `CREATEAT`, `STATUS`, `ADDRESS`, `DISCOUNT`, `CUSTOMERID`, `SHIPPINGMETHODID`)
+        $queryOrder = "INSERT INTO `orders`(`ORDERID`, `CREATEAT`, `STATUS`,`DISCOUNT`, `ADDRESS`, `CUSTOMERID`, `SHIPPINGMETHODID`)
                         VALUES (?,CURRENT_DATE(),?,?,?,?,?)";
-        $result = $this->Query($queryOrder, [$uuid, 1, null, null, $id, 1]);
+        $result = $this->Query($queryOrder, [$uuid, 1, null, $address, $id, $shippingMethod]);
         if ($result !== false && $result->rowCount() > 0) {
-
             return $uuid;
         } else {
             echo "Không thể tạo đơn hàng mới.";

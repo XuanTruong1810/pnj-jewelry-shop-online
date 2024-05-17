@@ -7,6 +7,11 @@ class CustomerModel extends ModelBase
         $query = "SELECT * FROM `customer`";
         return $this->Query($query, null)->fetchAll();
     }
+    public function GetCustomerByID($id)
+    {
+        $query = "SELECT * FROM `customer` WHERE CUSTOMERID = ?";
+        return $this->Query($query, [$id])->fetch(PDO::FETCH_ASSOC);
+    }
     public function AddCustomer($name, $phoneNumber, $address, $email)
     {
         if (empty($address)) {

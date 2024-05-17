@@ -43,4 +43,35 @@ class Authentication extends ModelBase
             return null;
         }
     }
+    public function CheckUser($phoneNumber)
+    {
+        $query = "SELECT * FROM `customer` WHERE PHONENUMBER = ?";
+        $result = $this->Query($query, [$phoneNumber])->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function LoginUser($phoneNumber)
+    {
+        $result =  $this->CheckUser($phoneNumber);
+        $payload = [
+            "IDUser" => $result['CUSTOMERID'],
+            "Username" => $result['PHONENUMBER'],
+        ];
+        $token = JWT::encode($payload, "XuanTruongKey", 'HS256');
+        return $token;
+    }
+    public function GenerateTokenUser($token)
+    {
+        if ($token) {
+            $decoded = JWT::decode($token, new Key("XuanTruongKey", 'HS256'));
+            $query = "SELECT * FROM  `customer` WHERE CUSTOMERID = ? ";
+            $result = $this->Query($query, [$decoded->IDUser]);
+            if ($result) {
+                return $decoded;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
 }

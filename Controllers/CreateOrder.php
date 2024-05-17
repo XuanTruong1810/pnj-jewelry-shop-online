@@ -40,4 +40,46 @@ class CreateOrder extends ControllerBase
             "Orders" => $result,
         ]);
     }
+    public function CreateOrderAPI()
+    {
+        $postData = file_get_contents("php://input");
+        $jsonData = json_decode($postData, true);
+        $customerID = "";
+        $jsonData = $jsonData['ORDER'];
+        $order = [
+            'CUSTOMERNAME' => $jsonData['CUSTOMERNAME'],
+            'PHONENUMBER' => $jsonData['PHONENUMBER'],
+            'EMAIL' => $jsonData['EMAIL'],
+            'ADDRESS' => $jsonData['ADDRESS'],
+            'SHIPPINGMETHOD' => $jsonData['SHIPPINGMETHOD']
+        ];
+        $modelAuth = $this->Model("Authentication");
+        $checkUser = $modelAuth->CheckUser($jsonData['PHONENUMBER']);
+        if (!$checkUser) {
+            $modelUser = $this->Model("CustomerModel");
+            $customerID =  $modelUser->AddCustomer(
+                $order['CUSTOMERNAME'],
+                $order['PHONENUMBER'],
+                $order['ADDRESS'],
+                $order['EMAIL']
+            );
+        } else {
+            $customerID = $checkUser['CUSTOMERID'];
+        }
+        session_start();
+        $modelOrder = $this->Model("OrderModel");
+        $OrderID = $modelOrder->AddOrder($customerID, $order['SHIPPINGMETHOD'], $order["ADDRESS"]);
+        $products = [];
+        foreach ($_SESSION['cart'] as $productKey => $productValue) {
+            array_push($products, [
+                'product_size_id' => $productKey,
+                'quantity' => $productValue
+            ]);
+        }
+        $modeDetail = $this->Model('OrderDetailModel');
+        $modeDetail->AddOrderDetail($products, $OrderID);
+        unset($_SESSION['cart']);
+        header("application/json");
+        echo  json_encode(["data" => "Tạo thành công", "status" => 200]);
+    }
 }

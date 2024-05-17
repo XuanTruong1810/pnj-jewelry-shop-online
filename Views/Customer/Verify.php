@@ -47,8 +47,18 @@
             }),
             dataType: "json",
             success: function(response) {
-                window.location.href = "/PNJSHOP/Customer/index/";
-            }
+                console.log(response);
+                switch (response.status) {
+                    case 200:
+                        window.location.href = "/PNJSHOP/Customer/index/";
+                        break;
+                    case 201:
+                        window.location.href = "/PNJSHOP/Customer/CreateAccount/";
+                        break;
+                    default:
+                        break;
+                }
+            },
         });
     })
 </script>

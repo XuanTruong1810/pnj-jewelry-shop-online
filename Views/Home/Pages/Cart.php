@@ -52,8 +52,6 @@
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
-
-
             <div>
                 <div class="pay_temp">
                     <div class="pay">
@@ -107,10 +105,10 @@
                         </div>
                     </div>
                     <div class="input-info row">
-                        <div class="col-sm-6"><input type="text" placeholder="Họ tên(Bắt buộc)"></div>
-                        <div class="col-sm-6"><input type="text" placeholder="SĐT (bắt buộc)"></div>
-                        <div class="col-sm-6"><input type="text" placeholder="Email"></div>
-                        <div class="col-sm-6"><input type="date" placeholder="Ngày sinh"></div>
+                        <div class="col-sm-6"><input type="text" id="CUSTOMERNAME" value="<?php echo ($data['Customer']['CUSTOMERNAME']) ?>" placeholder="Họ tên(Bắt buộc)"></div>
+                        <div class="col-sm-6"><input type="text" id="PHONENUMBER" value="<?php echo ($data['Customer']['PHONENUMBER']) ?>" placeholder="SĐT (bắt buộc)"></div>
+                        <div class="col-sm-6"><input type="text" id="Email" value="<?php echo ($data['Customer']['EMAIL']) ?>" placeholder="Email"></div>
+                        <!-- <div class="col-sm-6"><input type="date" value="<?php echo ($data['Customer']['CUSTOMERNAME']) ?>" placeholder="Ngày sinh"></div> -->
                     </div>
                     <div class="continue">
                         <button class="continue">Tiếp tục</button>
@@ -120,7 +118,12 @@
                     <p>2</p>
                     <p>Hình thức nhận hàng</p>
                 </div>
-                <div>
+                <div style="display: flex; justify-content: space-between;">
+                    <button data-style="2" id="shipping" style="width: 50%; background-color: blue;">Giao hàng tận nơi</button>
+                    <button data-style="1" id="shop" style="width: 50%;">Nhận tại cửa hàng</button>
+                </div>
+                <div style="display: none;" class="shop"></div>
+                <div style="display: block;" class="shipping">
                     <div class="input-info row">
                         <div class="col-sm-6">
                             <select name="province" id="province">
@@ -141,7 +144,7 @@
                             </select>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" name="road" placeholder="Số nhà, Tên đường">
+                            <input type="text" name="road" id="road" placeholder="Số nhà, Tên đường">
                         </div>
                         <div class="col-sm-12">
                             <input type="text" name="location_description" placeholder="Ghi chú">
@@ -173,9 +176,153 @@
                     </ul>
                 </div>
                 <div style="text-align: center;">
-                    <button>Đặt hàng</button>
+                    <button id="createOrder">Đặt hàng</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    let shipping = 2;
+    document.querySelector("#shop").addEventListener("click", () => {
+        document.querySelector('.shop').style.display = "block";
+        document.querySelector('.shipping').style.display = "none";
+        document.querySelector('#shop').style.backgroundColor = "blue";
+        document.querySelector('#shipping').style.backgroundColor = "";
+        shipping = 1;
+
+    });
+    document.querySelector("#shipping").addEventListener("click", () => {
+        document.querySelector('.shipping').style.display = "block";
+        document.querySelector('.shop').style.display = "none";
+        document.querySelector('#shipping').style.backgroundColor = "blue";
+        document.querySelector('#shop').style.backgroundColor = "";
+        shipping = 2;
+
+
+
+
+
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script>
+    const provinces = $("#province");
+    const cities = $("#city");
+    $.ajax({
+        type: "GET",
+        url: "https://api.mysupership.vn/v1/partner/areas/province",
+        success: function(response) {
+
+            $.each(response.results, function(index, province) {
+                provinces.append(`<option data-name="${province.name}" value="${province.code}">${province.name}</option>`);
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+    provinces.change(function(e) {
+        var selectedProvinceId = $(this).val();
+        console.log(this);
+        if (selectedProvinceId) {
+            $.ajax({
+                type: "GET",
+                url: "https://api.mysupership.vn/v1/partner/areas/district?province=" + selectedProvinceId,
+                success: function(response) {
+
+                    cities.empty();
+                    $.each(response.results, function(index, city) {
+                        cities.append(`<option data-name="${city.name}" value="${city.code}">${city.name}</option>`);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                }
+            });
+        }
+
+    });
+
+    cities.change(function() {
+        var selectedCityId = $(this).val();
+        if (selectedCityId) {
+            $.ajax({
+                type: "GET",
+                url: "https://api.mysupership.vn/v1/partner/areas/commune?district=" + selectedCityId,
+                success: function(response) {
+                    const wards = $("#wards");
+                    wards.empty();
+                    $.each(response.results, function(index, ward) {
+                        wards.append(`<option data-name="${ward.name}"  value="${ward.code}">${ward.name}</option>`);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                }
+            });
+        }
+    });
+</script>
+<script>
+    function getCookie(name) {
+        let cookieArr = document.cookie.split(";");
+
+        for (let i = 0; i < cookieArr.length; i++) {
+            let cookiePair = cookieArr[i].split("=");
+
+            if (name == cookiePair[0].trim()) {
+                return decodeURIComponent(cookiePair[1]);
+            }
+        }
+        return null;
+    }
+    document.getElementById("createOrder").addEventListener('click', () => {
+
+        let data = {};
+        let fullAddress;
+        const token = getCookie('AuthenticationUser');
+
+        const username = $("#CUSTOMERNAME").val();
+        const phoneNumber = $("#PHONENUMBER").val();
+        const email = $("#Email").val();
+        data = {
+            CUSTOMERNAME: username,
+            PHONENUMBER: phoneNumber,
+            EMAIL: email,
+        };
+        data.SHIPPINGMETHOD = shipping;
+        if (shipping === 1) {
+            data.ADDRESS = null;
+        } else {
+            const province = $("#province option:selected").data('name');
+            const city = $("#city option:selected").data('name');
+            const ward = $("#wards option:selected").data('name');
+            const road = $("#road").val();
+            fullAddress = `${road} - ${ward} - ${city} - ${province}`;
+            data.ADDRESS = fullAddress;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/PNJSHOP/CreateOrder/CreateOrderAPI/",
+            data: JSON.stringify({
+                ORDER: data
+            }),
+            dataType: "json",
+            contentType: "application/json;charset=UTF-8",
+            success: function(response) {
+                if (response.status === 200) {
+                    // redirect to payment page
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Đã xảy ra lỗi khi gửi yêu cầu tạo đơn hàng:", error);
+                console.log("Trạng thái lỗi:", status);
+                console.log("Thông tin lỗi:", xhr.responseText);
+            }
+        });
+
+
+    })
+</script>

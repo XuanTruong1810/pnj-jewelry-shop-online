@@ -13,6 +13,7 @@ class VerifyPhoneNumber extends ControllerBase
 
     private function SendOTP($PhoneNumber)
     {
+        $generateNumber = $PhoneNumber;
         if (substr($PhoneNumber, 0, 1) === '0') {
             $PhoneNumber = '+84' . substr($PhoneNumber, 1);
         }
@@ -31,6 +32,7 @@ class VerifyPhoneNumber extends ControllerBase
         );
 
         $_SESSION['OTP'] = $num_str;
+        $_SESSION['phoneNumber'] = $generateNumber;
         $request = new SmsAdvancedTextualRequest(messages: [$theMessage]);
         $response = $api->sendSmsMessage($request);
     }
@@ -50,7 +52,15 @@ class VerifyPhoneNumber extends ControllerBase
         header('Content-Type: application/json');
         if ($jsonData['OTP'] === $_SESSION['OTP']) {
             unset($_SESSION['OTP']);
-            echo json_encode(['data' => "Thành công", 'status' => 200]);
+            $model = $this->Model("Authentication");
+            $result =  $model->CheckUser($_SESSION['phoneNumber']);
+            if (!$result) {
+                echo json_encode(['data' => "Thành công", 'status' => 201, 'message' => "Chưa có tài khoản"]);
+            } else {
+                $token =  $model->LoginUser($result['PHONENUMBER']);
+                setcookie('AuthenticationUser', $token, time() + (86400 * 30), '/');
+                echo json_encode(['data' => "Thành công", 'status' => 200]);
+            }
         } else {
             echo json_encode(['data' => "Không đúng", 'status' => 403]);
         }
