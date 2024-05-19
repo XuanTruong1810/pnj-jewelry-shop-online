@@ -88,9 +88,9 @@ $orderID = basename($currentUrl);
             </div>
         </div>
         <div>
-            <div style="display: flex; justify-content: space-between;">
-                <button id="PaymentShipping" type="button" class="btn btn-primary" data-mdb-ripple-init>Thanh toán khi nhận hàng</button>
-                <button id="momo" type="button" class="btn btn-primary" data-mdb-ripple-init>Thanh toán qua MOMO</button>
+
+            <div style="display: flex; justify-content: space-around;">
+                <button <?php echo $data['Payment'] ? "disabled" : "" ?> id="PaymentShipping" type="button" class="btn btn-primary" data-mdb-ripple-init>Thanh toán khi nhận hàng</button>
                 <form action="../../Payment/PaymentOnlineATM/<?php echo $orderID ?>" method="POST" target="_blank" enctype="application/x-www-form-urlencoded">
                     <button id="atm" type="submit" class="btn btn-primary" data-mdb-ripple-init>Thanh toán qua ngân hàng</button>
                 </form>

@@ -8,7 +8,12 @@ class  PaymentOrder extends ModelBase
     }
     public function SetPaymentStatus($orderID, $status)
     {
-        $query = "UPDATE paymentmethod_order SET STATUS=? WHERE ORDERID=?";
-        return $this->Query($query, [$status, $orderID])->rowCount();
+        if ($status != null) {
+            $query = "UPDATE paymentmethod_order SET STATUS= CURRENT_TIME() WHERE ORDERID=?";
+            return $this->Query($query, [$orderID])->rowCount();
+        } else {
+            $query = "UPDATE paymentmethod_order SET STATUS= ? WHERE ORDERID=?";
+            return $this->Query($query, [$status, $orderID])->rowCount();
+        }
     }
 }

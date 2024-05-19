@@ -58,7 +58,7 @@ class OrderModel extends ModelBase
     {
         $uuid = uniqid();
         $queryOrder = "INSERT INTO `orders`(`ORDERID`, `CREATEAT`, `STATUS`,`DISCOUNT`, `ADDRESS`, `CUSTOMERID`, `SHIPPINGMETHODID`)
-                        VALUES (?,CURRENT_DATE(),?,?,?,?,?)";
+                        VALUES (?,CURRENT_TIME(),?,?,?,?,?)";
         $result = $this->Query($queryOrder, [$uuid, 1, null, $address, $id, $shippingMethod]);
         if ($result !== false && $result->rowCount() > 0) {
             return $uuid;
@@ -66,5 +66,24 @@ class OrderModel extends ModelBase
             echo "Không thể tạo đơn hàng mới.";
             return false;
         }
+    }
+    public function CheckOrder($id)
+    {
+        $query = "SELECT * FROM `orders`
+                WHERE ORDERID = ? AND SHIPPINGMETHODID = 2";
+        return $this->Query($query, [$id])->fetchAll(PDO::FETCH_OBJ);
+    }
+    public function GetHistoryOrder($customerID)
+    {
+        $query = "SELECT
+                 o.ORDERID, p.PRODUCTNAME,p.IMAGE_1,pz.PRICE,od.QUANTITY,od.TOTAL,o.CREATEAT
+                FROM `orderdetail` as od
+                    JOIN product_size as pz on pz.PRODUCT_SIZEID = od.PRODUCT_SIZEID
+                    JOIN products as p on p.PRODUCTID = pz.PRODUCTID
+                    JOIN orders as o on o.ORDERID = od.ORDERID
+                WHERE o.CUSTOMERID = ?
+                ORDER BY o.CREATEAT DESC
+                ";
+        return $this->Query($query, [$customerID])->fetchAll(PDO::FETCH_OBJ);
     }
 }

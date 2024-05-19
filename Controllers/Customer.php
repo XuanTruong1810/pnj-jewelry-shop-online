@@ -24,4 +24,15 @@ class Customer extends ControllerBase
     {
         $this->View('login', "Customer");
     }
+    public function History()
+    {
+        $model = $this->Model("Authentication");
+        $decode = $model->GenerateTokenUser($_COOKIE['AuthenticationUser']);
+        $modelOrder = $this->Model('OrderModel');
+        $result = $modelOrder->GetHistoryOrder($decode->IDUser);
+        $this->View("index", "Customer", [
+            "Page" => "History",
+            "History" => $result,
+        ]);
+    }
 }

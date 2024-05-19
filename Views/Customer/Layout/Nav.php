@@ -10,13 +10,10 @@
     <div>
         <ul>
             <li>
-                <a href="?page=home">Thông tin tài khoản</a>
+                <a href="../../Customer/index/">Thông tin tài khoản</a>
             </li>
             <li>
-                <a href="?page=coupon">Mã giảm giá của tôi</a>
-            </li>
-            <li>
-                <a href="?page=history">Lịch sử mua hàng</a>
+                <a href="../../Customer/history/">Lịch sử mua hàng</a>
             </li>
             <li>
                 <a href="?page=coupon">Đăng xuất</a>

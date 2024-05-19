@@ -4,8 +4,12 @@ class Payment  extends ControllerBase
 {
     public function index($id)
     {
+        $model  = $this->Model("OrderModel");
+        $result = $model->CheckOrder($id);
+
         $this->View("index", "Home", [
-            "Page" => "Payment"
+            "Page" => "Payment",
+            "Payment" => $result,
         ]);
     }
     private function execPostRequest($url, $data)

@@ -1,41 +1,40 @@
 <div class="history-customer">
     <h3>Đơn hàng</h3>
-    <div class="status">
-        <ul>
-            <li>Tất cả</li>
-            <li>Đơn hàng mới</li>
-            <li>Đang giao</li>
-            <li>Hoàn tất</li>
-            <li>Đã hủy</li>
-        </ul>
-    </div>
     <div>
         <?php
-        for ($i = 0; $i <  3; $i++) {
+
+        function Format($dateString)
+        {
+            $dateTime = DateTime::createFromFormat('Y-m-d H:i:s.u', $dateString);
+            return $dateTime->format('d-m-Y h:ia');
+        }
+        ?>
+        <?php
+        foreach ($data['History'] as $history) {
         ?>
             <div style="margin: 20px 0;">
                 <div>
-                    <p class="time">Thời gian: 22-02-2024 15:43pm</p>
+                    <p class="time">Thời gian: <?php echo Format($history->CREATEAT) ?></p>
                 </div>
                 <div class="history_customer-item">
                     <div class="item_top">
-                        <h3>#1190657</h3>
+                        <h3>Mã đơn hàng: #<?php echo ($history->ORDERID) ?></h3>
                         <h3>Kênh online</h3>
                     </div>
                     <div class="item_mid">
 
                         <div class="img">
-                            <img src="<?php echo $publicFile ?>/Image/Products/jhhasodjc.png" alt="">
+                            <img src="../../Public/Image/Products/<?php echo $history->IMAGE_1 ?>" alt="">
 
                         </div>
                         <div class="info_Product">
-                            <p>Nhẫn vàng 10K đính đá ECZ PNJ XMXMW060984</p>
-                            <p>Đơn giá:3.352.000đ <span>X1</span></p>
+                            <p><?php echo $history->PRODUCTNAME ?></p>
+                            <p><?php echo number_format($history->PRICE, 0, '', ',') . "VNĐ" ?> <span>X<?php echo $history->QUANTITY ?> </span></p>
                         </div>
 
                     </div>
                     <div class="item_bot">
-                        <h3>Tổng tiền: 3.352.000đ</h3>
+                        <h3><?php echo number_format($history->TOTAL, 0, '', ',') . "VNĐ"  ?></h3>
                         <h3>Đã hủy</h3>
                     </div>
                 </div>

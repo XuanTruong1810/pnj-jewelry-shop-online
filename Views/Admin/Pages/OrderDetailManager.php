@@ -43,8 +43,8 @@
         <div>
             <h2>Thông tin thanh toán</h2>
             <p><strong>Địa chỉ nhận hàng: </strong><?php echo ($data['Users']->ADDRESS !== null ? htmlspecialchars($data['Users']->ADDRESS) : $data['Users']->SHIPPINGMETHODNAME) ?></p>
-            <!-- <p><strong>Phương thức thanh toán: </strong><?php echo ($data["Payment"]->PAYMENTMETHODNAME) ?></p> -->
-            <p><strong>Trạng thái thanh toán: </strong>Chưa thanh toán</p>
+            <p><strong>Phương thức thanh toán: </strong><?php echo ($data["Payment"]->PAYMENTMETHODNAME) ?></p>
+            <p><strong>Trạng thái thanh toán: </strong><?php echo $data['Payment']->STATUS === null ? "Chưa thanh toán" : "Đã thanh toán" ?></p>
         </div>
     </div>
 </div>

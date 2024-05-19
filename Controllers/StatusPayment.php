@@ -9,7 +9,7 @@ class StatusPayment extends ControllerBase
         $modelPaymentOrder = $this->Model("PaymentOrder");
 
         if ($message == "Successful.") {
-            $responseTime = date("Y-m-d H:i:s");
+            $responseTime = "done";
             $modelPaymentOrder->SetPaymentStatus($orderId, $responseTime);
         } else {
             $modelPaymentOrder->SetPaymentStatus($orderId, null);
