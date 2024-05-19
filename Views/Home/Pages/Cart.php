@@ -313,7 +313,7 @@
             contentType: "application/json;charset=UTF-8",
             success: function(response) {
                 if (response.status === 200) {
-                    // redirect to payment page
+                    window.location.href = `/PNJSHOP/Payment/index/${response.OrderID}`
                 }
             },
             error: function(xhr, status, error) {

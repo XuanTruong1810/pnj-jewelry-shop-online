@@ -21,7 +21,7 @@
                 </div>
                 <div>
                     <label for="name">Địa chỉ</label>
-                    <input type="text" id="name">
+                    <input type="text" id="">
                 </div>
                 <div>
                     <label for="name">Phường xã</label>

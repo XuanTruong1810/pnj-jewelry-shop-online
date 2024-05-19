@@ -80,6 +80,6 @@ class CreateOrder extends ControllerBase
         $modeDetail->AddOrderDetail($products, $OrderID);
         unset($_SESSION['cart']);
         header("application/json");
-        echo  json_encode(["data" => "Tạo thành công", "status" => 200]);
+        echo  json_encode(["data" => "Tạo thành công", "status" => 200, "OrderID" =>  $OrderID]);
     }
 }

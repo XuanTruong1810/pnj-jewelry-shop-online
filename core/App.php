@@ -32,7 +32,7 @@ class App
     public function URLProcess()
     {
         if (isset($_GET["url"])) {
-            return explode("/", filter_var(trim($_GET["url"], "/")));
+            return explode("/", filter_var(trim($_GET["url"], "/"), FILTER_SANITIZE_URL));
         } else {
             header("Location: Home/Index/");
             exit();

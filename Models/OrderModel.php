@@ -2,12 +2,16 @@
 
 class OrderModel extends ModelBase
 {
-    // Dùng cho Admin
     public function GetAll()
     {
         $query = "SELECT ORDERID,TOTAL,CREATEAT, C.CUSTOMERNAME as CUSTOMERNAME, STATUS FROM orders AS O
                     JOIN customer AS C ON C.CUSTOMERID = O.CUSTOMERID ORDER BY CREATEAT DESC";
         return $this->Query($query, null)->fetchAll();
+    }
+    public function GetOrderByID($OrderID)
+    {
+        $query = "SELECT * FROM orders WHERE ORDERID = ?";
+        return $this->Query($query, [$OrderID])->fetch(PDO::FETCH_ASSOC);
     }
     public function DetailOrder_GetDetailProduct($id)
     {
