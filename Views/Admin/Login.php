@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin</title>
+    <link rel="stylesheet" href="../../Public/css/Admin/login.css">
+
 </head>
 
 <body>
-    <div>
-
+    <div class="container">
         <div>
             <label for="">UserName</label>
             <input type="text" placeholder="UserName" id="username" required name="username">
@@ -18,10 +19,18 @@
             <label for="">Password</label>
             <input type="text" placeholder="Password" id="password" required name="password">
         </div>
-        <button id="loginButton">Login</button>
-
+        <div class="login">
+            <button id="loginButton">Đăng nhập</button>
+        </div>
+        <div style="width: 100%; display: flex; justify-content: flex-end;">
+            <a href="">Quên mật khẩu</a>
+        </div>
     </div>
 </body>
+
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     $(document).ready(function() {

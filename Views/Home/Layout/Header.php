@@ -48,7 +48,7 @@ try {
             </div>
             <div class="header_top-middle">
                 <div>
-                    <img src="../../Public/Image/Common/logo.png" alt="abc" />
+                    <a href="../../Home/index/"><img src="../../Public/Image/Common/logo.png" alt="abc" /></a>
                 </div>
             </div>
             <div class="header_top-right">
