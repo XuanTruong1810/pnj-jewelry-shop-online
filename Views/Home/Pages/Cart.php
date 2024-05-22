@@ -27,7 +27,7 @@
                                 </div>
                                 <div>
                                     <div>
-                                        <p>Size dây cổ:</p>
+                                        <p>Kích cỡ</p>
                                     </div>
                                     <div>
                                         <select name="size" id="size">
@@ -42,9 +42,9 @@
                             </div>
                             <div>
                                 <form action="../DeleteCart/" method="post">
-                                    <input style="visibility: hidden;" type="text" name="valueDelete" value="<?php echo $item['PRODUCTSIZE']; ?>">
+                                    <input hidden type="text" name="valueDelete" value="<?php echo $item['PRODUCTSIZE']; ?>">
                                     <button type="submit">
-                                        <p><i class="fa-solid fa-trash"></i>Xóa</p>
+                                        <p style="margin: auto 0;"><i class="fa-solid fa-trash"></i> Xóa</p>
                                     </button>
                                 </form>
                             </div>
@@ -54,10 +54,6 @@
             <?php endif; ?>
             <div>
                 <div class="pay_temp">
-                    <div class="pay">
-                        <p>Tạm phí</p>
-                        <p>2.132.000đ</p>
-                    </div>
                     <div class="pay">
                         <p>Chi phí vận chuyển</p>
                         <p style="font-weight: bold;">Miễn phí</p>
@@ -88,30 +84,27 @@
                     <div class="step-name">Thanh toán</div>
                 </div>
             </div>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
             <div>
                 <div class="infoUser cart-right-form">
                     <p>1</p>
                     <p>Thông tin người mua</p>
                 </div>
-                <div>
-                    <div class="gender">
-                        <div style="margin-right: 10px;">
-                            <input type="radio" id="male" name="gender" value="male">
-                            <label for="male">Anh</label><br>
-                        </div>
-                        <div>
-                            <input type="radio" id="female" name="gender" value="female">
-                            <label for="female">Chị</label><br>
-                        </div>
+                <div data-toggle="collapse" data-target="#collapse_info" type="button" id="update">
+                    <div>
+                        <p>Chỉnh Sửa</p>
                     </div>
+                </div>
+                <div id="collapse_info" class="collapse">
                     <div class="input-info row">
                         <div class="col-sm-6"><input type="text" id="CUSTOMERNAME" value="<?php echo ($data['Customer']['CUSTOMERNAME']) ?>" placeholder="Họ tên(Bắt buộc)"></div>
                         <div class="col-sm-6"><input type="text" id="PHONENUMBER" value="<?php echo ($data['Customer']['PHONENUMBER']) ?>" placeholder="SĐT (bắt buộc)"></div>
                         <div class="col-sm-6"><input type="text" id="Email" value="<?php echo ($data['Customer']['EMAIL']) ?>" placeholder="Email"></div>
-                        <!-- <div class="col-sm-6"><input type="date" value="<?php echo ($data['Customer']['CUSTOMERNAME']) ?>" placeholder="Ngày sinh"></div> -->
                     </div>
                     <div class="continue">
-                        <button class="continue">Tiếp tục</button>
+                        <button class="continueBtn">Tiếp tục</button>
                     </div>
                 </div>
                 <div class="form-of-receipt cart-right-form">
@@ -146,32 +139,13 @@
                         <div class="col-sm-6">
                             <input type="text" name="road" id="road" placeholder="Số nhà, Tên đường">
                         </div>
-                        <div class="col-sm-12">
-                            <input type="text" name="location_description" placeholder="Ghi chú">
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <p>Phương thức vận chuyển</p>
-                    <div class="shippingMethod">
-                        <label for="">
-                            <input type="radio" name="" id="">
-                        </label>
-                        <div>
-                            <p>Miễn phí vận chuyển</p>
-                            <p>Dự kiến nhận hàng: Chủ nhật, ngày 25/02/2024 - Chủ nhật, ngày 03/03/2024</p>
-                        </div>
                     </div>
                 </div>
                 <div>
                     <ul class="checkbox-list">
                         <li>
-                            <input type="checkbox" id="checkbox1" name="checkbox1">
-                            <label for="checkbox1">Đồng ý nhận các thông tin và chương trình khuyến mãi của PNJ qua email, SMS , mạng xã hội…</label>
-                        </li>
-                        <li>
                             <input type="checkbox" id="checkbox2" name="checkbox2">
-                            <label for="checkbox2">Tôi đồng ý cho PNJ thu thập, xử lý dữ liệu cá nhân của tôi theo quy định tại Thông báo này và theo quy định của pháp luật.</label>
+                            <label for="checkbox2">Tôi đồng ý cho cửa hàng thu thập, xử lý dữ liệu cá nhân của tôi theo quy định tại Thông báo này và theo quy định của pháp luật.</label>
                         </li>
                     </ul>
                 </div>
@@ -182,6 +156,45 @@
         </div>
     </div>
 </div>
+<style>
+    #update {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 10px;
+        margin-top: -5px;
+    }
+
+    #update div {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        text-align: center;
+        padding: 5px 8px;
+    }
+
+    #update div p {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+</style>
+<script>
+    const update = document.querySelector("#update");
+    update.addEventListener('click', () => {
+        const collapse = document.getElementsByClassName("collapse in");
+        console.log(collapse);
+        if (collapse) {
+            update.style.visibility = "hidden";
+        }
+    })
+    document.querySelector(".continueBtn").addEventListener('click', () => {
+        // Call api cập nhật or thêm người dùng
+        const collapse = document.querySelector(".collapse");
+        collapse.classList.remove("in");
+        update.style.visibility = "visible";
+
+    })
+</script>
 <script>
     let shipping = 2;
     document.querySelector("#shop").addEventListener("click", () => {
@@ -325,4 +338,7 @@
 
 
     })
+</script>
+<script>
+
 </script>

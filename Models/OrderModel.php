@@ -15,7 +15,7 @@ class OrderModel extends ModelBase
     }
     public function DetailOrder_GetDetailProduct($id)
     {
-        $query = "SELECT P.PRODUCTNAME,SI.DESCRIPTION_SIZE,OD.QUANTITY, OD.TOTAL FROM orderdetail AS OD
+        $query = "SELECT P.PRODUCTNAME,SI.DESCRIPTION_SIZE,OD.QUANTITY, OD.TOTAL as TOTALDETAIL,P.IMAGE_1, PZ.PRICE , O.TOTAL  FROM orderdetail AS OD
                     JOIN orders AS O ON O.ORDERID = OD.ORDERID
                     JOIN product_size AS PZ ON PZ.PRODUCT_SIZEID = OD.PRODUCT_SIZEID
                     JOIN products AS P ON P.PRODUCTID = PZ.PRODUCTID

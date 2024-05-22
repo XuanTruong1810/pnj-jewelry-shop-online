@@ -6,10 +6,15 @@ class Payment  extends ControllerBase
     {
         $model  = $this->Model("OrderModel");
         $result = $model->CheckOrder($id);
-
+        $orderModel = $this->Model("OrderModel");
+        $infoUser = $orderModel->DetailOrder_GetInfoUser($id);
+        $orderDetail = $orderModel->DetailOrder_GetDetailProduct($id);
         $this->View("index", "Home", [
             "Page" => "Payment",
             "Payment" => $result,
+            "OrderDetail" => $orderDetail,
+            "Customer" => $infoUser,
+            "ID" => $id,
         ]);
     }
     private function execPostRequest($url, $data)
