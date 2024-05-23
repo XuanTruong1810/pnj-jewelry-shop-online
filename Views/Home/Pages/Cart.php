@@ -99,9 +99,19 @@
                 </div>
                 <div id="collapse_info" class="collapse">
                     <div class="input-info row">
-                        <div class="col-sm-6"><input type="text" id="CUSTOMERNAME" value="<?php echo ($data['Customer']['CUSTOMERNAME']) ?>" placeholder="Họ tên(Bắt buộc)"></div>
-                        <div class="col-sm-6"><input type="text" id="PHONENUMBER" value="<?php echo ($data['Customer']['PHONENUMBER']) ?>" placeholder="SĐT (bắt buộc)"></div>
-                        <div class="col-sm-6"><input type="text" id="Email" value="<?php echo ($data['Customer']['EMAIL']) ?>" placeholder="Email"></div>
+                        <div class="col-sm-6">
+                            <input type="text" id="CUSTOMERNAME" value="<?php echo ($data['Customer']['CUSTOMERNAME'] ?? "") ?>" placeholder="Họ tên(Bắt buộc)">
+                            <p></p>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" id="PHONENUMBER" value="<?php echo ($data['Customer']['PHONENUMBER'] ?? "") ?>" placeholder="SĐT (bắt buộc)">
+                            <p></p>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" id="Email" value="<?php echo ($data['Customer']['EMAIL'] ?? "") ?>" placeholder="Email">
+                            <p></p>
+                        </div>
                     </div>
                     <div class="continue">
                         <button class="continueBtn">Tiếp tục</button>
@@ -121,23 +131,25 @@
                         <div class="col-sm-6">
                             <select name="province" id="province">
                                 <option value="" selected>Chọn Tỉnh/Thành phố</option>
-
                             </select>
+                            <p></p>
                         </div>
                         <div class="col-sm-6">
                             <select name="city" id="city">
                                 <option value="" selected>Chọn Quận/Huyện</option>
 
                             </select>
+                            <p></p>
                         </div>
                         <div class="col-sm-6">
                             <select name="wards" id="wards">
                                 <option value="" selected>Chọn Phường/Xã</option>
-
                             </select>
+                            <p></p>
                         </div>
                         <div class="col-sm-6">
                             <input type="text" name="road" id="road" placeholder="Số nhà, Tên đường">
+                            <p></p>
                         </div>
                     </div>
                 </div>
@@ -178,6 +190,7 @@
         font-weight: bold;
     }
 </style>
+
 <script>
     const update = document.querySelector("#update");
     update.addEventListener('click', () => {
@@ -187,13 +200,102 @@
             update.style.visibility = "hidden";
         }
     })
+    const ShowMessageError = (input, message) => {
+        const parentNode = input.parentElement;
+        const showMessage = parentNode.querySelector("p");
+        input.style.border = "1px solid red";
+        showMessage.style.color = "red";
+        showMessage.style.fontSize = "1.2rem";
+        showMessage.textContent = message;
+    }
+    const ShowMessageSuccess = (input, message) => {
+        const parentNode = input.parentElement;
+        const showMessage = parentNode.querySelector("p");
+        input.style.border = "1px solid green";
+        showMessage.textContent = "";
+    }
     document.querySelector(".continueBtn").addEventListener('click', () => {
-        // Call api cập nhật or thêm người dùng
-        const collapse = document.querySelector(".collapse");
-        collapse.classList.remove("in");
-        update.style.visibility = "visible";
+        const customerName = document.querySelector("#CUSTOMERNAME");
+        const phoneNumber = document.querySelector("#PHONENUMBER");
+        const email = document.querySelector("#Email");
+        if (validateEmail() && validateFullName() && validatePhone()) {
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/PNJSHOP/Customer/CreateAccountAPI/",
+                data: JSON.stringify({
+                    CUSTOMERNAME: customerName.value,
+                    PHONENUMBER: phoneNumber.value,
+                    EMAIL: email.value,
+
+                }),
+                dataType: "json",
+                success: function(response) {
+                    if (response.status === 200) {
+                        const collapse = document.querySelector(".collapse");
+                        collapse.classList.remove("in");
+                        update.style.visibility = "visible";
+                    }
+                }
+            });
+        }
 
     })
+    document.getElementById('CUSTOMERNAME').addEventListener('input', validateFullName);
+    document.getElementById('Email').addEventListener('input', validateEmail);
+    document.getElementById('PHONENUMBER').addEventListener('input', validatePhone);
+
+    function validateFullName() {
+        const fullName = document.querySelector('#CUSTOMERNAME').value;
+        const fullNameRegex = /^[a-zA-ZÀ-ỹ\s]+$/;
+        if (fullName.trim()) {
+            if (!fullNameRegex.test(fullName)) {
+                ShowMessageError(document.getElementById('CUSTOMERNAME'), "Không được phép có số")
+                return false;
+            } else {
+                ShowMessageSuccess(document.getElementById('CUSTOMERNAME'), "")
+                return true;
+            }
+        } else {
+            ShowMessageError(document.getElementById('CUSTOMERNAME'), "Không được phép rỗng")
+            return false;
+        }
+    }
+
+    function validateEmail() {
+        const email = document.querySelector('#Email').value;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (email.trim()) {
+            if (!emailRegex.test(email)) {
+                ShowMessageError(document.getElementById('Email'), "Không phải định đạng của Email!")
+                return false;
+            } else {
+                ShowMessageSuccess(document.getElementById('Email'), "")
+                return true;
+            }
+        } else {
+            ShowMessageError(document.getElementById('Email'), "Không được phép để trống!")
+            return false;
+        }
+    }
+
+    function validatePhone() {
+        const phone = document.getElementById('PHONENUMBER').value;
+        const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
+
+        if (phone.trim()) {
+            if (!phoneRegex.test(phone)) {
+                ShowMessageError(document.getElementById('PHONENUMBER'), "Không phải định đạng số điện thoại!")
+                return false;
+            } else {
+                ShowMessageSuccess(document.getElementById('PHONENUMBER'), "")
+                return true;
+            }
+        } else {
+            ShowMessageError(document.getElementById('PHONENUMBER'), "Không được phép để trống!")
+            return false;
+        }
+    }
 </script>
 <script>
     let shipping = 2;
@@ -211,11 +313,6 @@
         document.querySelector('#shipping').style.backgroundColor = "blue";
         document.querySelector('#shop').style.backgroundColor = "";
         shipping = 2;
-
-
-
-
-
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
@@ -291,51 +388,100 @@
         return null;
     }
     document.getElementById("createOrder").addEventListener('click', () => {
-
+        let check = false;
         let data = {};
         let fullAddress;
         const token = getCookie('AuthenticationUser');
-
-        const username = $("#CUSTOMERNAME").val();
-        const phoneNumber = $("#PHONENUMBER").val();
-        const email = $("#Email").val();
-        data = {
-            CUSTOMERNAME: username,
-            PHONENUMBER: phoneNumber,
-            EMAIL: email,
-        };
-        data.SHIPPINGMETHOD = shipping;
-        if (shipping === 1) {
-            data.ADDRESS = null;
+        const selectProvince = document.querySelector("#province");
+        const selectCity = document.querySelector("#city");
+        const selectWard = document.querySelector("#wards");
+        const inputRoad = document.querySelector("#road");
+        if (validateEmail()) {
+            check = true;
         } else {
-            const province = $("#province option:selected").data('name');
-            const city = $("#city option:selected").data('name');
-            const ward = $("#wards option:selected").data('name');
-            const road = $("#road").val();
-            fullAddress = `${road} - ${ward} - ${city} - ${province}`;
-            data.ADDRESS = fullAddress;
+            check = false;
+        }
+        if (validateFullName()) {
+            check = true;
+        } else {
+            check = false;
+        }
+        if (validatePhone()) {
+            check = true;
+        } else {
+            check = false;
+        }
+        if (selectProvince.value) {
+            ShowMessageSuccess(selectProvince, "");
+            check = true;
+        } else {
+            ShowMessageError(selectProvince, "Không được để trống");
+            check = false;
+        }
+        if (selectCity.value) {
+            ShowMessageSuccess(selectCity, "");
+            check = true;
+        } else {
+            ShowMessageError(selectCity, "Không được để trống");
+            check = false;
+        }
+        if (selectWard.value) {
+            ShowMessageSuccess(selectWard, "");
+            check = true;
+        } else {
+            ShowMessageError(selectWard, "Không được để trống");
+            check = false;
+        }
+        if (inputRoad.value.trim()) {
+            ShowMessageSuccess(inputRoad, "");
+            check = true;
+        } else {
+            ShowMessageError(inputRoad, "Không được để trống");
+            check = false;
         }
 
-        $.ajax({
-            type: "POST",
-            url: "http://localhost:8080/PNJSHOP/CreateOrder/CreateOrderAPI/",
-            data: JSON.stringify({
-                ORDER: data
-            }),
-            dataType: "json",
-            contentType: "application/json;charset=UTF-8",
-            success: function(response) {
-                if (response.status === 200) {
-                    window.location.href = `/PNJSHOP/Payment/index/${response.OrderID}`
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error("Đã xảy ra lỗi khi gửi yêu cầu tạo đơn hàng:", error);
-                console.log("Trạng thái lỗi:", status);
-                console.log("Thông tin lỗi:", xhr.responseText);
-            }
-        });
 
+
+        if (check) {
+            const username = $("#CUSTOMERNAME").val();
+            const phoneNumber = $("#PHONENUMBER").val();
+            const email = $("#Email").val();
+            data = {
+                CUSTOMERNAME: username,
+                PHONENUMBER: phoneNumber,
+                EMAIL: email,
+            };
+            data.SHIPPINGMETHOD = shipping;
+            if (shipping === 1) {
+                data.ADDRESS = null;
+            } else {
+                const province = $("#province option:selected").data('name');
+                const city = $("#city option:selected").data('name');
+                const ward = $("#wards option:selected").data('name');
+                const road = $("#road").val();
+                fullAddress = `${road} - ${ward} - ${city} - ${province}`;
+                data.ADDRESS = fullAddress;
+            }
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/PNJSHOP/CreateOrder/CreateOrderAPI/",
+                data: JSON.stringify({
+                    ORDER: data
+                }),
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success: function(response) {
+                    if (response.status === 200) {
+                        window.location.href = `/PNJSHOP/Payment/index/${response.OrderID}`
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Đã xảy ra lỗi khi gửi yêu cầu tạo đơn hàng:", error);
+                    console.log("Trạng thái lỗi:", status);
+                    console.log("Thông tin lỗi:", xhr.responseText);
+                }
+            });
+        }
 
     })
 </script>

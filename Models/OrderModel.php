@@ -57,9 +57,9 @@ class OrderModel extends ModelBase
     public function AddOrder($id, $shippingMethod, $address)
     {
         $uuid = uniqid();
-        $queryOrder = "INSERT INTO `orders`(`ORDERID`, `CREATEAT`, `STATUS`,`DISCOUNT`, `ADDRESS`, `CUSTOMERID`, `SHIPPINGMETHODID`)
-                        VALUES (?,CURRENT_TIME(),?,?,?,?,?)";
-        $result = $this->Query($queryOrder, [$uuid, 1, null, $address, $id, $shippingMethod]);
+        $queryOrder = "INSERT INTO `orders`(`ORDERID`, `CREATEAT`, `STATUS`, `ADDRESS`, `CUSTOMERID`, `SHIPPINGMETHODID`)
+                        VALUES (?,CURRENT_TIME(),?,?,?,?)";
+        $result = $this->Query($queryOrder, [$uuid, 1, $address, $id, $shippingMethod]);
         if ($result !== false && $result->rowCount() > 0) {
             return $uuid;
         } else {

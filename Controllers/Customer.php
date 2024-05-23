@@ -35,4 +35,18 @@ class Customer extends ControllerBase
             "History" => $result,
         ]);
     }
+    public function CreateAccountAPI()
+    {
+        $postData = file_get_contents("php://input");
+        $jsonData = json_decode($postData, true);
+        $model = $this->Model('CustomerModel');
+        $result = $model->UpdateCustomer($jsonData['CUSTOMERNAME'], $jsonData["PHONENUMBER"], "", $jsonData['EMAIL']);
+        if ($result) {
+            header('Content-Type: application/json; charset=utf8');
+            echo json_encode([
+                "Message" => "Sucess",
+                "status" => 200
+            ]);
+        }
+    }
 }
