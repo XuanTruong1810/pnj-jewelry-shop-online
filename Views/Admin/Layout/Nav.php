@@ -10,7 +10,7 @@
     <div>
         <ul>
             <li>
-                <a href="../../Employee/index/"><i class="fa-solid fa-user"></i> Quản lý Nhân Viên</a>
+                <a href="../../Employee/index/"><i class="fa-solid fa-users"></i> Quản lý Nhân Viên</a>
             </li>
             <li>
                 <a href="../../Orders/index/"><i class="fa-solid fa-cart-shopping"></i> Quản lý Đơn Hàng</a>
@@ -19,22 +19,23 @@
                 <a href="../../PurchaseInvoice/index/"><i class="fa-solid fa-cart-shopping"></i> Quản lý Nhập Hàng</a>
             </li>
             <li>
-                <a href="../../Admin/index/"><i class="fa-solid fa-cart-shopping"></i> Quản lý Sản Phẩm</a>
+                <a href="../../Admin/index/"><i class="fa-solid fa-box"></i> Quản lý Sản Phẩm</a>
             </li>
             <li>
-                <a href="../../CustomerManager/index/"><i class="fa-solid fa-cart-shopping"></i> Quản lý Khách Hàng</a>
+                <a href="../../CustomerManager/index/"><i class="fa-solid fa-user"></i> Quản lý Khách Hàng</a>
             </li>
             <li>
-                <a href="?page=products"><i class="fa-solid fa-list"></i> Thống Kê</a>
+                <a href="?page=products"><i class="fa-solid fa-chart-line"></i>Thống Kê</a>
             </li>
             <li>
                 <button>
-                    Đăng Xuất
+                    <i class="gg-log-out"></i>
                 </button>
             </li>
         </ul>
     </div>
 </div>
+<link href='https://unpkg.com/css.gg@2.0.0/icons/css/log-out.css' rel='stylesheet'>
 <script>
     document.querySelector('button').addEventListener('click', () => {
         $.ajax({

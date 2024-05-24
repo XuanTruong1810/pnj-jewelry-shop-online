@@ -2,7 +2,7 @@
 if (!$data['Customers']) : ?>
     <h1>Không tồn tại khách hàng</h1>
 <?php else : ?>
-    <table id="Customer" class="display" style="width:100%">
+    <table style="font-size: 1.3rem;" id="Customer" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>Họ và tên</th>
@@ -19,10 +19,10 @@ if (!$data['Customers']) : ?>
                     <td><?php echo $customer['PHONENUMBER'] ?></td>
                     <td><?php echo $customer['EMAIL'] ?></td>
                     <td>
-                        <a href="">
+                        <a href="" data-mdb-tooltip-init title="Xem chi tiết">
                             <button type="button" class="btn btn-primary" data-mdb-ripple-init><i class="fa-solid fa-circle-info"></i></button>
                         </a>
-                        <a href="">
+                        <a href="" data-mdb-tooltip-init title="Xóa khách hàng">
                             <button type="button" class="btn btn-primary" data-mdb-ripple-init><i class="fa-solid fa-trash"></i></button>
                         </a>
                     </td>

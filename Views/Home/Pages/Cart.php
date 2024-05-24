@@ -66,24 +66,7 @@
             </div>
         </div>
         <div class="cart-right">
-            <div class="stepper-wrapper" style="z-index: 0;">
-                <div class="stepper-item completed">
-                    <div class="step-counter"><i class="fa-solid fa-check"></i></div>
-                    <div class="step-name">Thông tin người mua</div>
-                </div>
-                <div class="stepper-item completed">
-                    <div class="step-counter"><i class="fa-solid fa-check"></i></div>
-                    <div class="step-name">Hình thức nhận hàng</div>
-                </div>
-                <div class="stepper-item active">
-                    <div class="step-counter"><i class="fa-solid fa-check"></i></div>
-                    <div class="step-name">Đặt hàng</div>
-                </div>
-                <div class="stepper-item">
-                    <div class="step-counter"><i class="fa-solid fa-check"></i></div>
-                    <div class="step-name">Thanh toán</div>
-                </div>
-            </div>
+
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>

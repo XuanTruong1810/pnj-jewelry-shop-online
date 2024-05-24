@@ -4,7 +4,7 @@ class OrderModel extends ModelBase
 {
     public function GetAll()
     {
-        $query = "SELECT ORDERID,TOTAL,CREATEAT, C.CUSTOMERNAME as CUSTOMERNAME, STATUS FROM orders AS O
+        $query = "SELECT ORDERID,TOTAL,CREATEAT,C.PHONENUMBER, C.CUSTOMERNAME as CUSTOMERNAME, STATUS FROM orders AS O
                     JOIN customer AS C ON C.CUSTOMERID = O.CUSTOMERID ORDER BY CREATEAT DESC";
         return $this->Query($query, null)->fetchAll();
     }

@@ -1,12 +1,12 @@
 <h1>Danh Sách nhân viên</h1>
 <a href="../../AddEmployee/index/">
-    <button type="button" class="btn btn-primary" data-mdb-ripple-init>Thêm Nhân Viên</button>
+    <button style="font-size: 1rem;" type="button" class="btn btn-primary" data-mdb-ripple-init>Thêm Nhân Viên</button>
 </a>
 <?php
 if (!$data['EmployeeList']) : ?>
     <h1>Không tồn tại khách hàng</h1>
 <?php else : ?>
-    <table id="Employee" class="display" style="width:100%">
+    <table style="font-size: 1.3rem;" id="Employee" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>Họ và tên</th>
@@ -19,19 +19,20 @@ if (!$data['EmployeeList']) : ?>
             </tr>
         </thead>
         <tbody>
+
             <?php foreach ($data['EmployeeList'] as $employee) : ?>
                 <tr>
                     <td><?php echo $employee['FULLNAME'] ?></td>
                     <td><?php echo $employee['PHONUMBER'] ?></td>
                     <td><?php echo $employee['EMAIL'] ?></td>
-                    <td><?php echo $employee['HIRE_DATE'] ?></td>
-                    <td><?php echo $employee['SALARY'] ?></td>
+                    <td><?php echo DateTime::createFromFormat('Y-m-d H:i:s.u', $employee['HIRE_DATE'])->format('d-m-Y'); ?></td>
+                    <td><?php echo number_format($employee['SALARY']) . " đ" ?></td>
                     <td>
-                        <a href="">
-                            <button type="button" class="btn btn-primary" data-mdb-ripple-init><i class="fa-solid fa-circle-info"></i></button>
+                        <a href="" data-mdb-tooltip-init title="Xem chi tiết">
+                            <button style="font-size: 1.2rem;" type="button" class="btn btn-primary" data-mdb-ripple-init><i class="fa-solid fa-circle-info"></i></button>
                         </a>
-                        <a href="../DeleteEmployee/<?php echo $employee['EMPLOYEEID'] ?>">
-                            <button type="button" class="btn btn-primary" data-mdb-ripple-init><i class="fa-solid fa-trash"></i></button>
+                        <a href="../DeleteEmployee/<?php echo $employee['EMPLOYEEID'] ?>" data-mdb-tooltip-init title="Xóa nhân viên">
+                            <button style="font-size: 1.2rem;" type="button" class="btn btn-primary" data-mdb-ripple-init><i class="fa-solid fa-trash"></i></button>
                         </a>
                     </td>
                 </tr>

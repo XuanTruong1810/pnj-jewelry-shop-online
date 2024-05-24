@@ -4,7 +4,7 @@
             <h1>Quản lý sản phẩm</h1>
         </div>
     </div>
-    <div style="margin-top: 30px; display: flex; justify-content: space-between;">
+    <div style="margin-top: 10px; display: flex; justify-content: space-between;">
         <div>
             <form action="../../AddProduct/index/">
                 <button type="submit" class="btn btn-primary" data-mdb-ripple-init>Thêm sản phẩm</button>
@@ -24,24 +24,30 @@
 
                 <?php foreach ($data['Products'] as $product) : ?>
                     <tr>
-                        <td>
-                            <p class="fw-normal mb-1"><?php echo $product['PRODUCTNAME'] ?></p>
+                        <td width="10px">
+                            <p class=""><?php echo $product['PRODUCTNAME'] ?></p>
                         </td>
                         <td>
-                            <span class=""><?php echo $product['PRICE'] ?></span>
+                            <span class=""><?php echo  number_format($product['PRICE']) . " đ" ?></span>
                         </td>
                         <td>
-                            <a href="../DetailProduct/<?php echo $product['PRODUCTID'] ?>">
-                                <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark">
-                                    Xem chi tiết
-                                </button>
-                            </a>
-                            <form action="../DeleteProduct/" method="post">
-                                <input type="hidden" name="ProductID" value="<?php echo $product['PRODUCTID'] ?>">
-                                <button type="submit" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark">
-                                    Xóa
-                                </button>
-                            </form>
+                            <span>
+                                <a href="../DetailProduct/<?php echo $product['PRODUCTID'] ?>">
+
+                                    <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark">
+                                        Xem chi tiết
+                                    </button>
+                                </a>
+                            </span>
+
+                            <span>
+                                <form action="../DeleteProduct/" method="post">
+                                    <input type="hidden" name="ProductID" value="<?php echo $product['PRODUCTID'] ?>">
+                                    <button type="submit" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark">
+                                        Xóa
+                                    </button>
+                                </form>
+                            </span>
                         </td>
                     </tr>
                 <?php endforeach; ?>
