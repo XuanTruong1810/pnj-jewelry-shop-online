@@ -12,7 +12,7 @@
         </div>
     </div>
     <div>
-        <table id="Data_product" class="table align-middle mb-0 bg-white display" style="width:100%">
+        <table style="font-size: 1.3rem;" id="Data_product" style="width:100%">
             <thead class="bg-light">
                 <tr>
                     <th>Tên sản phẩm</th>
@@ -21,25 +21,22 @@
                 </tr>
             </thead>
             <tbody>
-
                 <?php foreach ($data['Products'] as $product) : ?>
                     <tr>
-                        <td width="10px">
-                            <p class=""><?php echo $product['PRODUCTNAME'] ?></p>
+                        <td>
+                            <?php echo ($product['PRODUCTNAME']) ?>
                         </td>
                         <td>
-                            <span class=""><?php echo  number_format($product['PRICE']) . " đ" ?></span>
+                            <?php echo  number_format($product['PRICE']) . " đ" ?>
                         </td>
-                        <td>
+                        <td style="display: flex;">
                             <span>
                                 <a href="../DetailProduct/<?php echo $product['PRODUCTID'] ?>">
-
                                     <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark">
                                         Xem chi tiết
                                     </button>
                                 </a>
                             </span>
-
                             <span>
                                 <form action="../DeleteProduct/" method="post">
                                     <input type="hidden" name="ProductID" value="<?php echo $product['PRODUCTID'] ?>">

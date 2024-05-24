@@ -15,7 +15,7 @@ class OrderModel extends ModelBase
     }
     public function DetailOrder_GetDetailProduct($id)
     {
-        $query = "SELECT P.PRODUCTNAME,SI.DESCRIPTION_SIZE,OD.QUANTITY, OD.TOTAL as TOTALDETAIL,P.IMAGE_1, PZ.PRICE , O.TOTAL  FROM orderdetail AS OD
+        $query = "SELECT P.PRODUCTNAME,SI.DESCRIPTION_SIZE,OD.QUANTITY, PZ.PRICE, OD.TOTAL as TOTALDETAIL,P.IMAGE_1, PZ.PRICE , O.TOTAL  FROM orderdetail AS OD
                     JOIN orders AS O ON O.ORDERID = OD.ORDERID
                     JOIN product_size AS PZ ON PZ.PRODUCT_SIZEID = OD.PRODUCT_SIZEID
                     JOIN products AS P ON P.PRODUCTID = PZ.PRODUCTID
@@ -37,7 +37,7 @@ class OrderModel extends ModelBase
                     JOIN orders as o on o.ORDERID = pyo.ORDERID
                     JOIN paymentmethods as py on py.PAYMENTMETHODID = pyo.PAYMENTMETHODID
                     WHERE o.ORDERID = ?";
-        return $this->Query($query, [$id])->fetchObject();
+        return $this->Query($query, [$id])->fetch(PDO::FETCH_OBJ);
     }
     public function AcceptOrder($id)
     {

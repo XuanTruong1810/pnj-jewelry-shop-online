@@ -7,27 +7,26 @@
                 <th>Kích Thước</th>
                 <th>Số Lượng</th>
                 <th>Đơn Giá</th>
+                <th>Tổng giá</th>
             </thead>
             <tbody>
                 <?php
                 $total = 0;
                 foreach ($data["Products"] as $product) : ?>
                     <tr>
-                        <td><?php echo ($product['PRODUCTNAME']) ?></td>
+                        <td style="white-space: nowrap;  overflow: hidden;text-overflow: ellipsis; max-width: 200px;"><?php echo ($product['PRODUCTNAME']) ?></td>
                         <td><?php echo ($product['DESCRIPTION_SIZE']) ?></td>
                         <td>X<?php echo ($product['QUANTITY']) ?></td>
-                        <td><?php echo ($product['TOTAL']) ?></td>
+                        <td><?php echo (number_format($product['PRICE']) . " VNĐ") ?></td>
+                        <td><?php echo (number_format($product['TOTALDETAIL']) . " VNĐ") ?></td>
+
                     </tr>
                 <?php
                     $total += $product['TOTAL'];
                 endforeach; ?>
                 <tr>
-                    <td colspan="3" style="text-align: left; font-size: 1.2rem; font-weight: bold;">Giảm Giá</td>
-                    <td>100.000 VNĐ</td>
-                </tr>
-                <tr>
-                    <td colspan="3" style="text-align: left;  font-size: 1.2rem; font-weight: bold;">Tổng hóa đơn</td>
-                    <td><?php echo $total . "VNĐ"; ?></td>
+                    <td colspan="4" style="text-align: left;  font-size: 1.2rem; font-weight: bold;">Tổng hóa đơn</td>
+                    <td><?php echo number_format($total) . "VNĐ"; ?></td>
                 </tr>
             </tbody>
 
@@ -43,8 +42,8 @@
         <div>
             <h2>Thông tin thanh toán</h2>
             <p><strong>Địa chỉ nhận hàng: </strong><?php echo ($data['Users']->ADDRESS !== null ? htmlspecialchars($data['Users']->ADDRESS) : $data['Users']->SHIPPINGMETHODNAME) ?></p>
-            <p><strong>Phương thức thanh toán: </strong><?php echo ($data["Payment"]->PAYMENTMETHODNAME) ?></p>
-            <p><strong>Trạng thái thanh toán: </strong><?php echo $data['Payment']->STATUS === null ? "Chưa thanh toán" : "Đã thanh toán" ?></p>
+            <p><strong>Phương thức thanh toán: </strong><?php echo (!isset($data["Payment"]->PAYMENTMETHODNAME) ? "Chưa chọn phương thức thanh toán" : $data["Payment"]->PAYMENTMETHODNAME) ?></p>
+            <p><strong>Trạng thái thanh toán: </strong><?php echo isset($data['Payment']) && isset($data['Payment']->STATUS) ? "Đã thanh toán" : "Chưa thanh toán"; ?></p>
         </div>
     </div>
 </div>
