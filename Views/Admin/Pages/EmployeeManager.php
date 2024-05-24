@@ -23,12 +23,12 @@ if (!$data['EmployeeList']) : ?>
             <?php foreach ($data['EmployeeList'] as $employee) : ?>
                 <tr>
                     <td><?php echo $employee['FULLNAME'] ?></td>
-                    <td><?php echo $employee['PHONUMBER'] ?></td>
+                    <td><?php echo $employee['PHONENUMBER'] ?></td>
                     <td><?php echo $employee['EMAIL'] ?></td>
                     <td><?php echo DateTime::createFromFormat('Y-m-d H:i:s.u', $employee['HIRE_DATE'])->format('d-m-Y'); ?></td>
                     <td><?php echo number_format($employee['SALARY']) . " đ" ?></td>
                     <td>
-                        <a href="" data-mdb-tooltip-init title="Xem chi tiết">
+                        <a href="../DetailEmployee/<?php echo $employee['EMPLOYEEID'] ?>" data-mdb-tooltip-init title="Xem chi tiết">
                             <button style="font-size: 1.2rem;" type="button" class="btn btn-primary" data-mdb-ripple-init><i class="fa-solid fa-circle-info"></i></button>
                         </a>
                         <a href="../DeleteEmployee/<?php echo $employee['EMPLOYEEID'] ?>" data-mdb-tooltip-init title="Xóa nhân viên">

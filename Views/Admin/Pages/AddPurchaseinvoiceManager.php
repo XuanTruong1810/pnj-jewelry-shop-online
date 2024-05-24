@@ -1,11 +1,63 @@
+<style>
+    #Purchase {
+        display: flex;
+        align-items: center;
+    }
+
+    #Purchase p {
+        font-size: 1.3rem;
+
+    }
+
+    #Purchase select {
+        border: none;
+        outline: none;
+        font-size: 1.3rem;
+        padding: 10px 8px;
+        border: 1px solid gray;
+        border-radius: 10px;
+        margin-left: 10px;
+    }
+
+    #PurchaseInvoiceManager {
+        font-size: 1.2rem;
+    }
+
+    #order .productName {
+        font-weight: bold;
+    }
+
+    #order ul div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #order ul div li {
+        margin: 10px 0;
+        display: flex;
+        justify-content: space-between;
+        width: 250px;
+        font-size: 1.4rem;
+        align-items: center;
+    }
+
+    #order ul div li input {
+        outline: none;
+        border: none;
+        border-radius: 8px;
+        border: 1px solid gray;
+        padding: 6px 8px;
+        margin-left: 0;
+    }
+</style>
 <h1>Nhập hàng</h1>
-<div style="display: flex; align-items: center;">
+<div id="Purchase" style="display: flex; align-items: center;">
     <p>Chọn nhà cung cấp</p>
     <select name="" id="supplier"></select>
 </div>
-<div>
+<div id="PurchaseInvoiceManager">
     <div style="display: flex; justify-content: space-between;">
-        <div style="margin-right: 30px; width: 680px;">
+        <div style="margin-right: 30px; width: 900px;">
             <h5>Sản phẩm</h5>
             <div>
                 <button type="button" id="generateInvoiceBtn" class="btn btn-primary" data-mdb-ripple-init>Thêm vào hóa đơn</button>
@@ -22,7 +74,9 @@
                 <tbody>
                     <?php foreach ($data['Products'] as $product) : ?>
                         <tr>
-                            <td><input type="checkbox" name="" class="productCheckbox"></td>
+                            <td>
+                                <input type="checkbox" name="" class="productCheckbox">
+                            </td>
                             <td data-id="<?php echo $product['PRODUCT_SIZEID'] ?>">
                                 <?php echo ($product['PRODUCTNAME']) ?>
                             </td>
@@ -93,14 +147,18 @@
         selectedProducts.forEach(select => {
             const row = document.createElement('ul');
             row.innerHTML = `
-                <li data-id="${select.productId}">${select.productName}</li>
-                <li>${select.productSize}</li>
-                <li>
-                    <input class="quantity" type="number" name="" id="">
-                </li>
-                <li>
-                    <input class="price" type="number" name="" id="">
-                </li>
+                <li class="productName" data-id="${select.productId}">${select.productName}</li>
+                <li>Kích cỡ: <b>${select.productSize}</b></li>
+                <div>
+                    <li>
+                        <label>Số lượng</label>
+                        <input class="quantity" type="number" name="" id="">
+                    </li>
+                    <li>
+                        <label>Giá</label>
+                        <input class="price" type="number" name="" id="">
+                    </li>
+                </div>
                 <li>Xóa</li>
     `;
             productRows.appendChild(row);

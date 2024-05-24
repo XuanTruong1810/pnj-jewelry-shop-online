@@ -11,6 +11,79 @@
     </div>
     <div id="products" style="margin-top: 30px;"></div>
 </div>
+<style>
+    #products .itemAddProduct {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    #products .itemAddProduct>div {
+        flex: 1 1 100%;
+
+    }
+
+    #products .itemAddProduct>div>.uploadImgLIST {
+        border: 1px solid blue;
+        padding: 10px 20px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+
+    #products .itemAddProduct>div:nth-child(1):nth-child(n+2):nth-child(-n+2) {
+        display: flex;
+        justify-content: center;
+    }
+
+    #products .itemAddProduct>div .infoProduct {
+        width: 400px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 0;
+    }
+
+    #products .itemAddProduct>div .infoProduct label {
+        font-size: 1.4rem;
+    }
+
+    #products .itemAddProduct>div input {
+        border: none;
+        outline: none;
+        border: 1px solid gray;
+        font-size: 1.3rem;
+        padding: 5px 10px;
+        border-radius: 8px;
+        width: 300px;
+    }
+
+    #products .itemAddProduct>div>select {
+        outline: none;
+        border: none;
+        border: 1px solid gray;
+        padding: 10px 20px;
+        font-size: 1.4rem;
+        border-radius: 6px;
+    }
+
+    #products .itemAddProduct>div:nth-child(4) {
+        order: 1;
+    }
+
+    #products .itemAddProduct>div:nth-child(3) {
+        margin: 10px 0;
+        font-size: 1.4rem;
+    }
+
+    #products .itemAddProduct>div:nth-child(4) table {
+        font-size: 1.4rem;
+        width: 60%;
+    }
+
+    #products .itemAddProduct>div:nth-child(4) table tbody tr td {
+        padding: 10px 0;
+    }
+</style>
 <script>
     const products = document.getElementById('products');
     const countColumn = document.getElementById('countColumn');
@@ -22,7 +95,7 @@
             itemAddProduct.style.width = '100%';
             itemAddProduct.innerHTML = `
                 <div>
-                    <div>
+                    <div class="uploadImgLIST">
                         <label for="imgUpload-${i}">
                             <i class="fa-solid fa-plus"></i>
                         </label>
@@ -30,12 +103,13 @@
                         <input type="file" class="imgUpload" accept="image/*" name="imgUpload" id="imgUpload-${i}" hidden multiple ">
                         <div class="image-preview"></div>
                     </div>
-                    <div>
+                    <div class="infoProduct">
+                        <label for="">Tên sản phẩm</label>
                         <input type="text" class="ProductName" name="ProductName" placeholder="Tên sản phẩm">
                     </div>
-                    <div>
+                    <div class="infoProduct">
                         <label for="price">Giá cơ bản</label>
-                        <input type="text" class="ProductPrice" name="ProductPrice" id="price">
+                        <input type="number" class="ProductPrice" name="ProductPrice" id="price"  placeholder="Giá sản phẩm"> 
                     </div>
                 </div>
                 <div>
@@ -54,16 +128,22 @@
                     <select class="sizeChoice" name="sizeChoice"></select>
                 </div>
                 <div>
-                    <table>
-                        <thead>
-                            <tr>Kích cỡ</tr>
-                            <tr>Giá Tùy chọn</tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-                <div>
-                    <i class="fa-solid fa-xmark"></i>
+                    <div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Kích cỡ
+                                    </th>
+                                    <th>Giá Tùy chọn</th>
+                                </tr>
+                                
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             `;
 
@@ -164,7 +244,7 @@
                 const bodyTable = parent.querySelector("tbody");
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
-                        <td>Kích cỡ 
+                        <td>
                             <input type="text" value="${select.value}" readonly name="Size" id="">
                         </td>
                         <td>

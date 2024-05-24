@@ -27,4 +27,24 @@ class Employee extends ControllerBase
         $this->employeeModel->RemoveEmployee($id);
         $this->index();
     }
+    public function DetailEmployee($id)
+    {
+        $this->Middleware->AuthenticationAdmin($this->AuthModel);
+        $this->View("index", "Admin", [
+            "Page" => "UpdateEmployeeManager",
+            "Employee" => $this->employeeModel->GetEmployeeById($id)
+        ]);
+    }
+    public function UpdateEmployee()
+    {
+        $this->Middleware->AuthenticationAdmin($this->AuthModel);
+        $postData = file_get_contents("php://input");
+        $jsonData = json_decode($postData, true);
+        $this->employeeModel->UpdateEmployee($jsonData['ID'], $jsonData['EmployeeName'], $jsonData['PhoneNumber'], $jsonData['Email'], $jsonData['Salary']);
+        header('Content-Type: application/json; charset=utf8');
+        echo json_encode([
+            "Message" => "Successfully Update employee",
+            "status" => 200,
+        ]);
+    }
 }
