@@ -24,7 +24,6 @@
             <input type="submit" value="SMS" class="form-submit">
             <div style="color:gray">Lợi ích khi đăng nhập/đăng kí MyPNJ</div>
             <ul class="list">
-                <li><i class="fa-solid fa-circle-check"></i> Dễ dàng tra cứu hạng thẻ thành viên</li>
                 <li><i class="fa-solid fa-circle-check"></i> Xem lịch sử giao dịch và hóa đơn điện tử</li>
                 <li><i class="fa-solid fa-circle-check"></i> Xem được ưu đãi dành riêng cho quý khách</li>
             </ul>

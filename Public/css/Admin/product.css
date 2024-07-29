@@ -28,7 +28,7 @@
 
 
 body {
-    overflow: hidden;
+    /* overflow: hidden; */
     font-family: "Poppins", sans-serif;
     background-color: #fff;
     -webkit-font-smoothing: antialiased;

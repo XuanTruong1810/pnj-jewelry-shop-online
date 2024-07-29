@@ -18,8 +18,6 @@ class CreateOrder extends ControllerBase
         $customerName = $_POST['customer_name'];
         $phoneNumber = $_POST['phone_number'];
         $email = $_POST['email'];
-        $address = $_POST['address'];
-        $paymentMethodId = $_POST['Payment'];
         $selectedProducts = [];
         foreach (unserialize($_POST['data']) as $index => $product) {
             if (isset($_POST['size_' . $index]) && !empty($_POST['size_' . $index])) {
@@ -29,9 +27,10 @@ class CreateOrder extends ControllerBase
                 ];
             }
         }
-        $id = $this->Model("CustomerModel")->AddCustomer($customerName, $phoneNumber, $address, $email);
+        $id = $this->Model("CustomerModel")->UpdateCustomer($customerName, $phoneNumber, $email);
         $idOrder = $this->Model("OrderModel")->AddOrder($id);
         $this->Model("OrderDetailModel")->AddOrderDetail($selectedProducts, $idOrder);
+        $this->Model("PaymentOrder")->CreatePaymentOrder($idOrder, 2);
         $result = $this->OrderModel->GetAll();
         session_start();
         unset($_SESSION['products']);
@@ -42,9 +41,9 @@ class CreateOrder extends ControllerBase
     }
     public function CreateOrderAPI()
     {
+
         $postData = file_get_contents("php://input");
         $jsonData = json_decode($postData, true);
-        $customerID = "";
         $jsonData = $jsonData['ORDER'];
         $order = [
             'CUSTOMERNAME' => $jsonData['CUSTOMERNAME'],
@@ -60,7 +59,6 @@ class CreateOrder extends ControllerBase
             $customerID =  $modelUser->AddCustomer(
                 $order['CUSTOMERNAME'],
                 $order['PHONENUMBER'],
-                $order['ADDRESS'],
                 $order['EMAIL']
             );
         } else {

@@ -4,7 +4,7 @@ class ProductManagerModel extends ModelBase
 {
     public function GetAllProduct()
     {
-        $query = "SELECT * FROM products WHERE is_delete != 1";
+        $query = "SELECT * FROM products WHERE is_delete != 1 ";
         return $this->Query($query, null)->fetchAll();
     }
     public function DeleteProduct($id)
@@ -15,7 +15,7 @@ class ProductManagerModel extends ModelBase
     public function DetailProduct($id)
     {
         $query = "SELECT * FROM products WHERE PRODUCTID = ?";
-        return $this->Query($query, $id)->fetchAll(PDO::FETCH_ASSOC);
+        return $this->Query($query, [$id])->fetchAll(PDO::FETCH_ASSOC);
     }
     public function SearchProduct($keySearch)
     {
@@ -78,7 +78,7 @@ class ProductManagerModel extends ModelBase
     {
         $query = "SELECT ps.PRODUCT_SIZEID, P.PRODUCTNAME,ps.QUANTITY,S.DESCRIPTION_SIZE FROM product_size as ps
                 JOIN products AS P ON P.PRODUCTID = ps.PRODUCTID
-                JOIN SIZE AS S ON S.SIZEID = ps.SIZEID";
+                JOIN SIZE AS S ON S.SIZEID = ps.SIZEID ORDER BY ps.QUANTITY";
         return $this->Query($query, null)->fetchAll();
     }
     public function GetAllProductsUnder10()
@@ -88,5 +88,30 @@ class ProductManagerModel extends ModelBase
                     JOIN SIZE AS S ON S.SIZEID = ps.SIZEID
                     WHERE ps.QUANTITY < 10";
         return $this->Query($query, null)->fetchAll();
+    }
+    public function GetProductByID($id)
+    {
+        $query = "SELECT s.DESCRIPTION_SIZE , ps.PRODUCT_SIZEID,ps.PRICE,ps.QUANTITY from product_size as ps
+                    join size as s on s.SIZEID = ps.SIZEID
+                    where PRODUCTID = ?";
+        return $this->Query($query, [$id])->fetchAll(PDO::FETCH_OBJ);
+    }
+    public function GetCategoryByProductID($id)
+    {
+        $query = "SELECT category_attributes_detail.CATEGORY_ATTRIBUTES_DETAILID,category_attributes_detail.CATEGORY_ATTRIBUTES_DETAILNAME FROM category_attributes_detail 
+            JOIN products on products.CATEGORY_ATTRIBUTES_DETAILID = category_attributes_detail.CATEGORY_ATTRIBUTES_DETAILID
+            WHERE products.PRODUCTID = ?";
+        return $this->Query($query, [$id])->fetchAll(PDO::FETCH_OBJ);
+    }
+    public function UpdateProduct($id, $productName, $price, $size)
+    {
+        $query = "UPDATE products set PRODUCTNAME = ? ,PRICE = ? WHERE products.PRODUCTID = ?";
+        $result = $this->Query($query, [$productName, $price, $id])->rowCount();
+        if ($result > 0) {
+            foreach ($size as $size) {
+                $querySize = "UPDATE product_size set PRICE = ? WHERE PRODUCT_SIZEID = ?";
+                $this->Query($querySize, [$size['PRICE'], $size['PRODUCTSIZEID']]);
+            }
+        }
     }
 }

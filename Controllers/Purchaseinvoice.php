@@ -37,4 +37,15 @@ class PurchaseInvoice extends ControllerBase
         $this->PurchaseInvoiceModel->Confirm_delivery($id);
         $this->index();
     }
+    public function Detail($id)
+    {
+        $model = $this->Model("PurchaseInvoiceModel");
+        $PurchaseInvoice = $model->GetPurchaseInvoiceByID($id);
+        $PurchaseInvoiceDetail = $model->GetPurchaseInvoiceByDetailByID($id);
+        $this->View("index", "Admin", [
+            "Page" => "DetailInvoice",
+            "PurchaseInvoice" => $PurchaseInvoice,
+            "PurchaseInvoiceDetail" => $PurchaseInvoiceDetail,
+        ]);
+    }
 }

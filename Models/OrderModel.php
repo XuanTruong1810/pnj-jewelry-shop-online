@@ -25,10 +25,10 @@ class OrderModel extends ModelBase
     }
     public function DetailOrder_GetInfoUser($id)
     {
-        $query = "SELECT c.CUSTOMERNAME,c.PHONENUMBER,c.EMAIL,s.SHIPPINGMETHODNAME, o.ADDRESS FROM orders as o
+        $query = "SELECT c.CUSTOMERNAME,c.PHONENUMBER,c.EMAIL,s.SHIPPINGMETHODNAME,o.ADDRESS FROM orders as o
                     JOIN customer as c on c.CUSTOMERID = o.CUSTOMERID
                     JOIN shippingmethods as s on s.SHIPPINGMETHODID = o.SHIPPINGMETHODID
-                    WHERE o.ORDERID = ?";
+                    WHERE o.ORDERID =  ?";
         return $this->Query($query, [$id])->fetchObject();
     }
     public function DetailOrder_GetPaymentMethod($id)
@@ -39,27 +39,21 @@ class OrderModel extends ModelBase
                     WHERE o.ORDERID = ?";
         return $this->Query($query, [$id])->fetch(PDO::FETCH_OBJ);
     }
-    public function AcceptOrder($id)
+    public function AcceptStatusOrder($id, $status)
     {
-        $query = "UPDATE orders set STATUS = 1 WHERE ORDERID = ?";
-        return $this->Query($query, [$id]);
+        $query = "UPDATE orders set STATUS = ? WHERE ORDERID = ?";
+        $this->Query($query, [$status, $id]);
+        if ($status === 2) {
+            $queryUpdate = "UPDATE paymentmethod_order SET STATUS = CURRENT_TIME() WHERE ORDERID = ?";
+            $this->Query($queryUpdate, [$id]);
+        }
     }
-    public function ConfirmReceived($id)
-    {
-        $query = "UPDATE orders set STATUS = 2 WHERE ORDERID = ?";
-        return $this->Query($query, [$id]);
-    }
-    public function CancelOrder($id)
-    {
-        $query = "UPDATE orders set STATUS = 3 WHERE ORDERID = ?";
-        return $this->Query($query, [$id]);
-    }
-    public function AddOrder($id, $shippingMethod, $address)
+    public function AddOrder($id)
     {
         $uuid = uniqid();
         $queryOrder = "INSERT INTO `orders`(`ORDERID`, `CREATEAT`, `STATUS`, `ADDRESS`, `CUSTOMERID`, `SHIPPINGMETHODID`)
                         VALUES (?,CURRENT_TIME(),?,?,?,?)";
-        $result = $this->Query($queryOrder, [$uuid, 1, $address, $id, $shippingMethod]);
+        $result = $this->Query($queryOrder, [$uuid, 0, null, $id, 1]);
         if ($result !== false && $result->rowCount() > 0) {
             return $uuid;
         } else {

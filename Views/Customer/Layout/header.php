@@ -4,7 +4,7 @@
             <p><i class="fa-solid fa-microphone"></i> 0971758902</p>
         </span>
         <span>
-            <a href="../Home/?page=checkout-cart"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</a>
+            <a href="../../Cart/index/"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</a>
         </span>
     </div>
 </div>

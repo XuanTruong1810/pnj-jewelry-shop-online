@@ -55,13 +55,13 @@ try {
                 <div>
                     <span><i class="fa-regular fa-user"></i></span>
                     <a href="../../Customer/Login/">
-                        <span>Tài khoản của tôi</span>
+                        <span style="color: black;">Tài khoản của tôi</span>
                     </a>
                 </div>
                 <div>
                     <a href="../../Cart/index/">
-                        <span><i class="fa-solid fa-cart-shopping"></i></span>
-                        <span>Giỏ hàng</span>
+                        <span style="color: black;"><i class="fa-solid fa-cart-shopping"></i></span>
+                        <span style="color: black;">Giỏ hàng</span>
                     </a>
                 </div>
             </div>
@@ -75,12 +75,12 @@ try {
                         <?php
                         foreach ($category['attributes'] as $attribute) :
                         ?>
-                            <ul>
+                            <ul style="padding-left: 0;">
                                 <li><?php echo ($attribute['CATEGORY_ATTRIBUTENAME']) ?></li>
                                 <?php
                                 foreach ($attribute['items'] as $item) : ?>
-                                    <a href="../Category/<?php echo $item['CATEGORY_ATTRIBUTES_DETAILID'] ?>">
-                                        <li><?php echo ($item['CATEGORY_ATTRIBUTES_DETAILNAME']) ?></li>
+                                    <a style="color: black;" href="../Category/<?php echo $item['CATEGORY_ATTRIBUTES_DETAILID'] ?>">
+                                        <li class="choiceHeader"><?php echo ($item['CATEGORY_ATTRIBUTES_DETAILNAME']) ?></li>
                                     </a>
                                 <?php endforeach; ?>
                             </ul>
@@ -89,8 +89,14 @@ try {
                 </div>
             <?php endforeach; ?>
             <div class="search">
-                <input pattern="[a-zA-Z]+" title="Chỉ chấp nhận ký tự chữ" type="text" placeholder="Tìm kiếm trang sức" />
+                <input id="Search_input" pattern="[a-zA-Z]+" title="Chỉ chấp nhận ký tự chữ" type="text" placeholder="Tìm kiếm trang sức" />
             </div>
+
         </div>
     </div>
 </header>
+<style>
+    .choiceHeader:hover {
+        color: red;
+    }
+</style>

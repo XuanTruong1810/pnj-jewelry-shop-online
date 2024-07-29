@@ -8,8 +8,6 @@ if (!$data['Customers']) : ?>
                 <th>Họ và tên</th>
                 <th>Số điện thoại</th>
                 <th>Email</th>
-                <th>Chức Năng</th>
-
             </tr>
         </thead>
         <tbody>
@@ -18,14 +16,7 @@ if (!$data['Customers']) : ?>
                     <td><?php echo $customer['CUSTOMERNAME'] ?></td>
                     <td><?php echo $customer['PHONENUMBER'] ?></td>
                     <td><?php echo $customer['EMAIL'] ?></td>
-                    <td>
-                        <a href="" data-mdb-tooltip-init title="Xem chi tiết">
-                            <button type="button" class="btn btn-primary" data-mdb-ripple-init><i class="fa-solid fa-circle-info"></i></button>
-                        </a>
-                        <a href="" data-mdb-tooltip-init title="Xóa khách hàng">
-                            <button type="button" class="btn btn-primary" data-mdb-ripple-init><i class="fa-solid fa-trash"></i></button>
-                        </a>
-                    </td>
+
                 </tr>
             <?php endforeach; ?>
         </tbody>

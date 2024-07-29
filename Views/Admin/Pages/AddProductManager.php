@@ -330,6 +330,10 @@
             success: function(response) {
 
                 console.log("return data:", response);
+                if (response.status === 200) {
+                    alert("Thêm sản phẩm thành công");
+                    window.location.href = "../../Admin/index/";
+                }
             },
             error: function(xhr, status, error) {
 

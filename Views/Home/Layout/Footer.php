@@ -19,7 +19,7 @@
             </div>
             <div class="footer_bot-middleLeft">
                 <h6>Về PNJ</h6>
-                <ul>
+                <ul style="padding-left: 0;">
 
                     <li>Câu chuyện PNJ</li>
                     <li>Tuyển dụng</li>
@@ -30,32 +30,17 @@
                 </ul>
             </div>
             <div class="footer_bot-middleRight">
-                <h6>DỊCH VỤ KHÁCH HÀNG</h6>
-                <ul>
 
-                    <li>Hướng dẫn đo size trang sức</li>
-                    <li>Mua hàng trả góp</li>
-                    <li>Hướng dẫn mua hàng và thanh toán</li>
-                    <li>Cẩm nang sử dụng trang sức</li>
-                    <li>Câu hỏi thường gặp</li>
-                </ul>
                 <h6>CHÍNH SÁCH</h6>
-                <ul>
-
-                    <li>Chính sách hoàn tiền</li>
+                <ul style="padding-left: 0;">
                     <li>Chính sách giao hàng</li>
-                    <li>Chính sách bảo hành thu đổi</li>
-                    <li>Chính sách khách hàng thân thiết</li>
                     <li>Chính sách bảo mật thông tin khách hàng</li>
                     <li>Chính sách xử lý dữ liệu cá nhân</li>
                 </ul>
                 <h6>PHƯƠNG THỨC THANH TOÁN</h6>
-                <span> <img src="../../Public/Image/Common/visa.svg" alt=""></span>
-                <span> <img src="../../Public/Image/Common/mastercard.svg" alt=""></span>
-                <span> <img src="../../Public/Image/Common/jcb.svg" alt=""></span>
-                <span> <img src="../../Public/Image/Common/thanhtoantienmat.svg" alt=""></span>
-                <span> <img src="../../Public/Image/Common/internetBanking.svg" alt=""></span>
-                <span> <img src="../../Public/Image/Common/tragop.svg" alt=""></span>
+
+                <span> <img style="width: 200px;" src="../../Public/Image/Common/momo.jpg" alt=""></span>
+
             </div>
             <div class="footer_bot-Right">
                 <h6>KẾT NỐI VỚI CHÚNG TÔI</h6>

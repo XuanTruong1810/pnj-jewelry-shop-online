@@ -22,22 +22,6 @@
                     </label>
                     <input type="text" name="email" placeholder="Nhập Email">
                 </div>
-                <div>
-                    <label for="">
-                        Địa chỉ:
-                    </label>
-                    <input type="text" name="address" placeholder="Nhập địa chỉ">
-                </div>
-            </div>
-            <div>
-                Chọn Phương Thức Thanh Toán
-                <div>
-                    <select name="Payment" id="">
-                        <?php foreach ($data['Payments'] as $payment) : ?>
-                            <option value="<?php echo $payment['PAYMENTMETHODID'] ?>"><?php echo $payment['PAYMENTMETHODNAME'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
             </div>
         </div>
         <div class="CreateOrder_Details">
@@ -58,7 +42,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <input type="hidden" name="data" value="<?php echo htmlspecialchars(serialize($data['Products'])); ?>">
+                    <input hidden name="data" value="<?php echo htmlspecialchars(serialize($data['Products'])); ?>">
                     <?php if (!$data['Products']) : ?>
                         <tr>
                             <td colspan="7">

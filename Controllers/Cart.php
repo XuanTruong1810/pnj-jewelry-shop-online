@@ -3,11 +3,16 @@ class Cart extends ControllerBase
 {
     public function index()
     {
+        $model = $this->Model("Authentication");
+        $decode = $model->GenerateTokenUser($_COOKIE['AuthenticationUser']);
+        $ModelCustomer = $this->Model("CustomerModel");
+        $result = $ModelCustomer->GetCustomerByID($decode->IDUser);
         $modelCart = $this->Model("CartModel");
         $Cart = $modelCart->GetCartItems();
         $this->View("index", "Home", [
             "Page" => "Cart",
             "Cart" => $Cart,
+            "Customer" => $result,
         ]);
     }
     public function AddCart()

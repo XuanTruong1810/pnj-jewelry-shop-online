@@ -16,15 +16,38 @@ class Product extends ModelBase
         $row = $result;
         if ($row > 8) {
             $row = ceil($row / 8);
+        } else {
+            $row = 1;
         }
-        return 1;
+        return $row;
     }
     public function GetProductPagination($pageNumber, $pageSize)
     {
-        $offset = ($pageNumber - 1) * $pageSize;
+        $offset = (int) ($pageNumber - 1) * $pageSize;
 
-        $query = "SELECT * FROM products WHERE is_delete = 0 LIMIT ? OFFSET ?";
-        $result = $this->Query($query, [$pageSize, $offset])->fetchAll();
+        $query = "SELECT * FROM products WHERE is_delete = 0 LIMIT $pageSize OFFSET $offset ";
+        $result = $this->Query($query, null)->fetchAll();
+        return $result;
+    }
+    public function PaginationIDCategory($IDCategory)
+    {
+
+        $query = "SELECT COUNT(*) FROM products where CATEGORY_ATTRIBUTES_DETAILID = ?";
+        $result = $this->Query($query, [$IDCategory])->fetchColumn();
+        $row = $result;
+        if ($row > 8) {
+            $row = ceil($row / 8);
+        } else {
+            $row = 1;
+        }
+        return $row;
+    }
+    public function GetProductPaginationByIDCategory($id, $pageNumber, $pageSize)
+    {
+        $offset = (int) ($pageNumber - 1) * $pageSize;
+
+        $query = "SELECT * FROM products WHERE is_delete = 0 AND CATEGORY_ATTRIBUTES_DETAILID = ? LIMIT $pageSize OFFSET $offset ";
+        $result = $this->Query($query, [$id])->fetchAll();
         return $result;
     }
     public function GetProductByID($id)
@@ -42,7 +65,7 @@ class Product extends ModelBase
     public function SearchProduct($keySearch)
     {
 
-        $query = "SELECT * FROM PRODUCTS WHERE ProductName LIKE ?";
+        $query = "SELECT * FROM PRODUCTS WHERE IS_DELETE = 0 AND ProductName LIKE ? LIMIT 5 ";
         $result = $this->Query($query, ["%" . $keySearch . "%"])->fetchAll();
         return $result;
     }

@@ -41,4 +41,20 @@ class PurchaseInvoiceModel extends ModelBase
         $result =  $this->Query(query: $query, values: [$id])->rowCount();
         return $result;
     }
+    public function GetPurchaseInvoiceByID($id)
+    {
+        $query = "SELECT * FROM purchaseinvoices
+                    JOIN suppliers as s ON purchaseinvoices.SUPPLIERID = s.SUPPLIERID
+                    WHERE PURCHASEINVOICEID = ?";
+        return $this->Query($query, [$id])->fetch(PDO::FETCH_OBJ);
+    }
+    public function GetPurchaseInvoiceByDetailByID($id)
+    {
+        $query = "SELECT p.PRODUCTNAME,s.DESCRIPTION_SIZE, pd.QUANTITY, pd.TOTAL FROM purchaseinvoice_detail as pd
+                    JOIN product_size as pz on pz.PRODUCT_SIZEID = pd.PRODUCT_SIZEID
+                    JOIN products as p on pz.PRODUCTID = p.PRODUCTID
+                    JOIN size as s on s.SIZEID = pz.SIZEID
+                    WHERE PURCHASEINVOICEID = ?";
+        return $this->Query($query, [$id])->fetchAll(PDO::FETCH_OBJ);
+    }
 }

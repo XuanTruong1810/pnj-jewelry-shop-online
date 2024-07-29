@@ -21,7 +21,6 @@ class AddPurchaseInvoice extends ControllerBase
         $this->View("index", "Admin", [
             "Page" => "AddPurchaseinvoiceManager",
             "Products" => $this->ProductModel->GetAllProducts(),
-            "ProductsUnder10" => $this->ProductModel->GetAllProductsUnder10()
         ]);
     }
     public function CreatePurchaseInvoice()

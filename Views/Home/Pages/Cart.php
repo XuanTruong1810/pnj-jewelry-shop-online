@@ -4,6 +4,7 @@
             <button><i class="fa-solid fa-caret-left"></i> Tiếp tục mua hàng</button>
         </a>
     </div>
+    <?php $sum = 0 ?>
     <div class="info-cart">
         <div class="cart-left">
             <h3>THÔNG TIN GIỎ HÀNG</h3>
@@ -11,9 +12,10 @@
                 <h1 style="font-size: 1.6rem; text-align: center;">Không có sản phẩm trong giỏ hàng</h1>
             <?php else : ?>
                 <?php foreach ($data['Cart'] as $item) : ?>
+                    <?php $sum += $item['PRICE'] *  $item['QUANTITY'] ?>
                     <div class="item">
                         <div class="img">
-                            <img src="../Public/Image/Products/<?php echo $item['IMAGE_1']; ?>" alt="">
+                            <img src="../../Public/Image/Products/<?php echo $item['IMAGE_1']; ?>" alt="">
                         </div>
                         <div class="info">
                             <div>
@@ -61,7 +63,7 @@
                 </div>
                 <div class="pay" style="margin-top: 10px;">
                     <p style="font-weight: bold;">Thành tiền</p>
-                    <p style="color: red; font-weight: bold;">2.132.000đ</p>
+                    <p style="color: red; font-weight: bold;"><?php echo (number_format($sum)) . "đ" ?></p>
                 </div>
             </div>
         </div>
@@ -422,10 +424,9 @@
             ShowMessageError(inputRoad, "Không được để trống");
             check = false;
         }
-
-
-
-        if (check) {
+        /// nếu bằng 1 thì phải có shop
+        /// nếu bằng 2 thì ship
+        if (shipping === 1) {
             const username = $("#CUSTOMERNAME").val();
             const phoneNumber = $("#PHONENUMBER").val();
             const email = $("#Email").val();
@@ -434,10 +435,17 @@
                 PHONENUMBER: phoneNumber,
                 EMAIL: email,
             };
-            data.SHIPPINGMETHOD = shipping;
-            if (shipping === 1) {
-                data.ADDRESS = null;
-            } else {
+            data.ADDRESS = null;
+        } else {
+            const username = $("#CUSTOMERNAME").val();
+            const phoneNumber = $("#PHONENUMBER").val();
+            const email = $("#Email").val();
+            data = {
+                CUSTOMERNAME: username,
+                PHONENUMBER: phoneNumber,
+                EMAIL: email,
+            };
+            if (check) {
                 const province = $("#province option:selected").data('name');
                 const city = $("#city option:selected").data('name');
                 const ward = $("#wards option:selected").data('name');
@@ -445,26 +453,26 @@
                 fullAddress = `${road} - ${ward} - ${city} - ${province}`;
                 data.ADDRESS = fullAddress;
             }
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:8080/PNJSHOP/CreateOrder/CreateOrderAPI/",
-                data: JSON.stringify({
-                    ORDER: data
-                }),
-                dataType: "json",
-                contentType: "application/json;charset=UTF-8",
-                success: function(response) {
-                    if (response.status === 200) {
-                        window.location.href = `/PNJSHOP/Payment/index/${response.OrderID}`
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("Đã xảy ra lỗi khi gửi yêu cầu tạo đơn hàng:", error);
-                    console.log("Trạng thái lỗi:", status);
-                    console.log("Thông tin lỗi:", xhr.responseText);
-                }
-            });
         }
+        data.SHIPPINGMETHOD = shipping;
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/PNJSHOP/CreateOrder/CreateOrderAPI/",
+            data: JSON.stringify({
+                ORDER: data
+            }),
+            dataType: "json",
+            contentType: "application/json;charset=UTF-8",
+            success: function(response) {
+                if (response.status === 200) {
+                    window.location.href = `/PNJSHOP/Payment/index/${response.OrderID}`
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Đã xảy ra lỗi khi gửi yêu cầu tạo đơn hàng:", error);
+                console.log("Thông tin lỗi:", xhr.responseText);
+            }
+        });
 
     })
 </script>

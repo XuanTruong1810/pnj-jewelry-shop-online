@@ -22,4 +22,16 @@ class Orders extends ControllerBase
             "Orders" => $result,
         ]);
     }
+    public function StatusOrder()
+    {
+        $this->Middleware->AuthenticationAdmin($this->AuthModel);
+        $postData = file_get_contents("php://input");
+        $jsonData = json_decode($postData, true);
+        $this->OrderModel->AcceptStatusOrder($jsonData['ID'], (int)$jsonData['Status']);
+        header('Content-Type: application/json; charset=utf8');
+        echo json_encode([
+            "Message" => "Success",
+            "Status" => 200,
+        ]);
+    }
 }

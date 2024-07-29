@@ -2,21 +2,21 @@
     <div class="detail_left">
         <div class="detail_left-listImage">
             <div>
-                <img src="../../Public/Image/Products/jhhasodjc.png" alt="">
+                <img src="../../Public/Image/Products/<?php echo $data['Product'][0]['Image_1'] ?>" alt="">
             </div>
             <div>
-                <img src="../../Public/Image/Products/jhhasodjc.png" alt="">
+                <img src="../../Public/Image/Products/<?php echo $data['Product'][0]['Image_2'] ?>" alt="">
             </div>
             <div>
-                <img src="../../Public/Image/Products/jhhasodjc.png" alt="">
+                <img src="../../Public/Image/Products/<?php echo $data['Product'][0]['Image_3'] ?>" alt="">
             </div>
             <div>
-                <img src="../../Public/Image/Products/jhhasodjc.png" alt="">
+                <img src="../../Public/Image/Products/<?php echo $data['Product'][0]['Image_4'] ?>" alt="">
             </div>
         </div>
         <div class="detail_left-image">
             <div>
-                <img src="../../Public/Image/Products/jhhasodjc.png" alt="">
+                <img src="../../Public/Image/Products/<?php echo $data['Product'][0]['Image_1'] ?>" alt="">
             </div>
         </div>
     </div>
@@ -51,7 +51,6 @@
         </form>
         <ul>
             <li> <i class=" fa-sharp fa-solid fa-circle-check "></i>Giá sản phẩm thay đổi tuỳ trọng lượng vàng và đá</li>
-            <li> <i class=" fa-sharp fa-solid fa-circle-check "></i>Đổi sản phẩm trong 48h tại hệ thống cửa hàng PNJ</li>
             <li> <i class=" fa-sharp fa-solid fa-circle-check "></i>Miễn phí giao nhanh Toàn Quốc 1-7 ngày</li>
         </ul>
     </div>

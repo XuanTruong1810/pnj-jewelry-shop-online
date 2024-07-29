@@ -1,6 +1,6 @@
 <?php
 
-class Payment  extends ControllerBase
+class Payment extends ControllerBase
 {
     public function index($id)
     {
@@ -51,7 +51,7 @@ class Payment  extends ControllerBase
             $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
             $orderInfo = "Thanh toán qua MoMo";
             $amount = (int)$result['TOTAL'];
-            $orderId = $result['ORDERID'];
+            $orderId = $OrderID;
             $redirectUrl = "http://localhost:8080/PNJSHOP/StatusPayment/index";
             $ipnUrl = "http://localhost:8080/PNJSHOP/StatusPayment/index";
             $extraData = "";
@@ -76,7 +76,6 @@ class Payment  extends ControllerBase
             );
             $result = $this->execPostRequest($endpoint, json_encode($data));
             $jsonResult = json_decode($result, true);
-
             header("Location: " . $jsonResult['payUrl']);
         }
     }

@@ -31,7 +31,7 @@
                         </td>
                         <td style="display: flex;">
                             <span>
-                                <a href="../DetailProduct/<?php echo $product['PRODUCTID'] ?>">
+                                <a href="../../DetailProductManager/index/<?php echo $product['PRODUCTID'] ?>">
                                     <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark">
                                         Xem chi tiết
                                     </button>

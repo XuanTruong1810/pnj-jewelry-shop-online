@@ -46,7 +46,7 @@
                 <div class="col-sm-10 header-right">
                     <?php require_once './Views/Admin/Layout/header.php' ?>
 
-                    <div class="customer_main" style="margin-left: 260px; margin-top: 70px; width: 100%;">
+                    <div class="customer_main" style="overflow-y: auto; height: 720px; margin-left: 260px; margin-top: 70px; width: 100%;">
                         <?php require_once './Views/Admin/Pages/' . $data["Page"] . ".php" ?>
                     </div>
                 </div>

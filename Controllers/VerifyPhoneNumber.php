@@ -19,8 +19,8 @@ class VerifyPhoneNumber extends ControllerBase
         }
         $num_str = sprintf("%06d", mt_rand(1, 999999));
         $message = "Mã OTP của bạn là:  $num_str";
-        $apiBaseURL = "3gl9g1.api.infobip.com";
-        $apiKey = "36a1a76c8c2a41f548f0347d6fef0214-fb54341a-f3b8-4384-8dcb-7130fcb525d7";
+        $apiBaseURL = "l3ylyj.api.infobip.com";
+        $apiKey = "6ae99bb8ca3815650d08b3eedc0e7b7d-7232250b-11c6-4853-885e-1965a5e9763b";
         $configuration = new Configuration(host: $apiBaseURL, apiKey: $apiKey);
 
         $api = new SmsApi(config: $configuration);

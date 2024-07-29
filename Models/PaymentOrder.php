@@ -1,5 +1,5 @@
 <?php
-class  PaymentOrder extends ModelBase
+class PaymentOrder extends ModelBase
 {
     public function CreatePaymentOrder($orderID, $payment)
     {

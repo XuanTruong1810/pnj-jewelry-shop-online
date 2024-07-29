@@ -17,7 +17,7 @@
         </div>
         <div>
             <label for="">Password</label>
-            <input type="text" placeholder="Password" id="password" required name="password">
+            <input type="password" placeholder="Password" id="password" required name="password">
         </div>
         <div class="login">
             <button id="loginButton">Đăng nhập</button>

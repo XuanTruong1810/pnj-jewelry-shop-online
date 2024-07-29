@@ -34,6 +34,9 @@ class AddProduct extends ControllerBase
         $modelProduct = $this->Model("ProductManagerModel");
         $result =  $modelProduct->AddProduct($jsonData['products']);
         header('Content-type: application/json');
-        echo json_encode(["data" => $result]);
+        echo json_encode([
+            "Message" => "Thêm thành công",
+            "status" => 200
+        ]);
     }
 }

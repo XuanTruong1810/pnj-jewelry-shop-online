@@ -1,3 +1,8 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+<!-- MDB -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
 <?php
 
 if (!$data['Products']) : ?>
@@ -11,34 +16,35 @@ if (!$data['Products']) : ?>
             <div class="item col-sm-3">
                 <div class="img">
                     <a href="../../Detail/ProductId/<?php echo $product['PRODUCTID']; ?>">
-                        <img src="../../Public/Image/Products/jhhasodjc.png" alt="">
+                        <img style="width: 280px;" src="../../Public/Image/Products/<?php echo $product['IMAGE_1'] ?>" alt="">
                     </a>
                 </div>
                 <div>
                     <div>
-                        <a href="#"><?php echo $product['PRODUCTNAME']; ?></a>
+                        <a style="color: black;" href="#">Tên sản phẩm: <?php echo $product['PRODUCTNAME']; ?></a>
                     </div>
                     <div>
-                        <p class="price"><?php echo number_format($product['PRICE']) . ' ' . "VNĐ"; ?></p>
+                        <p class="price"> Giá bán: <?php echo number_format($product['PRICE']) . ' ' . "VNĐ"; ?></p>
                     </div>
-                </div>
-                <div class="pay">
-                    <p>48 đã bán</p>
                 </div>
             </div>
         <?php
         endforeach;
         ?>
-        <div class="pagination-container">
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <?php
-                    for ($i = 0; $i < $data['Pagination']; $i++) {
-                    ?>
-                        <li class="page-item"><a class="page-link" href="?pagination=<?php echo $i + 1 ?>"><?php echo $i + 1 ?></a></li>
-                    <?php
-                    }
-                    ?>
+
+        <div style="display: flex;
+        justify-content: center; margin-top: 10px;">
+            <nav aria-label="...">
+                <ul class="pagination pagination-circle">
+                    <li class="page-item">
+                        <a class="page-link  <?php echo $data['CurrentPage'] == 1 ? "disabled" : "" ?>">Previous</a>
+                    </li>
+                    <?php for ($i = 1; $i <= $data["Pagination"]; $i++) : ?>
+                        <li class="page-item <?php echo $i == $data['CurrentPage'] ? "active" : "" ?>"><a class="page-link" href="../../Home/Page/<?php echo $i ?>"><?php echo $i ?> </a></li>
+                    <?php endfor; ?>
+                    <li class="page-item">
+                        <a class="page-link <?php echo $data['CurrentPage'] == $data['Pagination'] ? "disabled" : "" ?>" href="../../Home/Page/<?php echo (int) $data['CurrentPage'] + 1 ?>">Next</a>
+                    </li>
                 </ul>
             </nav>
         </div>

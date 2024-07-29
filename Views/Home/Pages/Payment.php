@@ -19,7 +19,7 @@ $amounts = array_map(function ($item) {
             <?php foreach ($data['OrderDetail'] as $item) : ?>
                 <div class="item">
                     <div class="img" style="width: 400px;">
-                        <img style="width: 100%; height: 200px" src="../Public/Image/Products/<?php echo $item['IMAGE_1']; ?>" alt="ảnh">
+                        <img style="width: 100%; height: 200px" src="../../Public/Image/Products/<?php echo $item['IMAGE_1']; ?>" alt="ảnh">
                     </div>
                     <div class="info">
                         <div>
@@ -68,7 +68,11 @@ $amounts = array_map(function ($item) {
         <div>
             <h5>Hình thức thanh toán</h5>
             <div class="Payment_select">
-                <button class="button_payment" <?php echo $data['Payment'] ? "disabled" : "" ?> id="PaymentShipping" type="button" class="btn btn-primary" data-mdb-ripple-init>Thanh toán khi nhận hàng</button>
+                <a href="../../StatusPayment/ReceiveStore/">
+                    <button class="button_payment" <?php echo $data['Payment'] ? "disabled" : "" ?> id="PaymentShipping" type="button" class="btn btn-primary" data-mdb-ripple-init>
+                        Thanh toán khi nhận hàng
+                    </button>
+                </a>
                 <form action="../../Payment/PaymentOnlineATM/<?php echo $orderID ?>" method="POST" target="_blank" enctype="application/x-www-form-urlencoded">
                     <button class="button_payment" id="atm" type="submit" class="btn btn-primary" data-mdb-ripple-init>Thanh toán qua ngân hàng</button>
                 </form>

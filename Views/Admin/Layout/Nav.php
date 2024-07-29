@@ -10,26 +10,28 @@
     <div>
         <ul>
             <li>
-                <a href="../../Employee/index/"><i class="fa-solid fa-users"></i> Quản lý Nhân Viên</a>
+                <a style="font-size: 1.4rem;" href="../../Employee/index/"><i class="fa-solid fa-users"></i> Quản lý Nhân Viên</a>
             </li>
             <li>
-                <a href="../../Orders/index/"><i class="fa-solid fa-cart-shopping"></i> Quản lý Đơn Hàng</a>
+                <a style="font-size: 1.4rem;" href="../../Orders/index/"><i class="fa-solid fa-cart-shopping"></i> Quản lý Đơn Hàng</a>
             </li>
             <li>
-                <a href="../../PurchaseInvoice/index/"><i class="fa-solid fa-cart-shopping"></i> Quản lý Nhập Hàng</a>
+                <a style="font-size: 1.4rem;" href="../../PurchaseInvoice/index/"><i class="fa-solid fa-cart-shopping"></i> Quản lý Nhập Hàng</a>
             </li>
             <li>
-                <a href="../../Admin/index/"><i class="fa-solid fa-box"></i> Quản lý Sản Phẩm</a>
+                <a style="font-size: 1.4rem;" href="../../Admin/index/"><i class="fa-solid fa-box"></i> Quản lý Sản Phẩm</a>
             </li>
             <li>
-                <a href="../../CustomerManager/index/"><i class="fa-solid fa-user"></i> Quản lý Khách Hàng</a>
+                <a style="font-size: 1.4rem;" href="../../CustomerManager/index/"><i class="fa-solid fa-user"></i> Quản lý Khách Hàng</a>
             </li>
             <li>
-                <a href="?page=products"><i class="fa-solid fa-chart-line"></i>Thống Kê</a>
-            </li>
-            <li>
-                <button>
-                    <i class="gg-log-out"></i>
+                <button style="outline: none;border: none;
+                background-color: transparent;">
+                    <span style="display: flex;
+                     justify-content: center;">
+                        <i style="margin-left: 2px; font-size: 1.4rem;" class="gg-log-out"></i>
+                        <p style="margin-left: 15px;margin-top: -3px; font-size: 1.4rem;"> Đăng Xuất</p>
+                    </span>
                 </button>
             </li>
         </ul>

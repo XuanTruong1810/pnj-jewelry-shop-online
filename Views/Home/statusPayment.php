@@ -62,7 +62,6 @@
         </div>
         <?php if ($data['Message'] === "Successful.") : ?>
             <h1>Thanh toán đơn hàng thành công</h1>
-
         <?php else : ?>
             <h1>Thanh toán đơn hàng Thất bại</h1>
         <?php endif; ?>
